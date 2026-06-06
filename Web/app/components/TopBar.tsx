@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { DegreePlan, DegreePlanQuery } from "@/lib/types";
 
 interface TopBarProps {
@@ -69,6 +70,10 @@ export default function TopBar(props: TopBarProps) {
           </div>
           <div className="brand-tag">แผนที่หลักสูตร</div>
         </div>
+        <nav className="mode-switch">
+          <span className="mode-pill active">แผนที่หลักสูตร</span>
+          <Link className="mode-pill" href="/timetable">จัดตารางเรียน</Link>
+        </nav>
       </div>
 
       <div className="topbar-center">
