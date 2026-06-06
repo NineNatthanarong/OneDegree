@@ -1,0 +1,15 @@
+# keep the build context small / reproducible
+**/node_modules
+**/.next
+**/out
+**/__pycache__
+**/*.pyc
+**/*.db
+**/.git
+**/.DS_Store
+.DS_Store
+# per-folder docker files are superseded by the root Dockerfile
+Web/Dockerfile
+Server/Dockerfile
+Web/docker-compose.yml
+Server/docker-compose.yml

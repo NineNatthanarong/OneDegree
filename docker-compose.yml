@@ -1,0 +1,15 @@
+services:
+  onedegree:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: onedegree:latest
+    container_name: onedegree
+    restart: unless-stopped
+    ports:
+      # host 6729 -> container 8000 (FastAPI serves both the UI and /api/v1)
+      - "6729:8000"
+    environment:
+      - DATABASE_URL=sqlite:////app/degreeplan.db
+      - SEED_DATA_PATH=/app/curriculum_database.json
+      - CORS_ALLOW_ORIGINS=*

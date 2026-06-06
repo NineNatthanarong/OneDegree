@@ -1,0 +1,1 @@
+# Keep this folder so the Docker build's COPY ./public step always succeeds.

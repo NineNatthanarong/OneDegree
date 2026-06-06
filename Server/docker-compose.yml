@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: degreeplan-db
+    environment:
+      POSTGRES_DB: degreeplan
+      POSTGRES_USER: degreeplan
+      POSTGRES_PASSWORD: degreeplan
+    ports:
+      - "1224:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U degreeplan -d degreeplan"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: degreeplan-api
+    environment:
+      DATABASE_URL: postgresql+psycopg://degreeplan:degreeplan@db:5432/degreeplan
+      SEED_DATA_PATH: /app/curriculum_database.json
+      CORS_ALLOW_ORIGINS: "*"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "1223:8000"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

@@ -1,0 +1,10 @@
+.DS_Store
+/.claude
+/Server/app/__pycache__
+/Server/app/core/__pycache__
+/Server/app/db/__pycache__
+/Server/tests/__pycache__
+/Server/tools/__pycache__
+/Web/node_modules
+/Web/.next
+/Web/out/_next

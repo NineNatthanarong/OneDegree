@@ -1,0 +1,12 @@
+services:
+  onedegree:
+    build: .
+    image: onedegree:latest
+    container_name: onedegree
+    restart: unless-stopped
+    ports:
+      - "6729:6729"
+    environment:
+      - NODE_ENV=production
+      - PORT=6729
+      - HOSTNAME=0.0.0.0
