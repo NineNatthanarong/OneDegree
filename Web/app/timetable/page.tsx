@@ -5,6 +5,8 @@ import Link from "next/link";
 import {
   DAYS,
   DAY_TH,
+  GROUP_ORDER,
+  groupLabel,
   fmtMinutes,
   fmtRoom,
   fetchTerms,
@@ -27,13 +29,22 @@ import {
   type Day
 } from "@/lib/timetable";
 
+// engineering majors keyed by course prefix, for the course-list pre-filter
+const ENG_PREFIX_BY_DEPT: Record<string, string> = {
+  "วิศวกรรมไฟฟ้า": "EE",
+  "วิศวกรรมคอมพิวเตอร์และหุ่นยนต์": "CE",
+  "วิศวกรรมมัลติมีเดียและเอ็นเตอร์เทนเมนต์": "MI",
+  "วิศวกรรมปัญญาประดิษฐ์และวิทยาการข้อมูล": "AIE"
+};
+
 const GRID_START = 8 * 60;
 const GRID_END = 21 * 60;
 const HOUR_H = 56;
 
 interface PlanSel {
   acadyr: string;
-  dept: string;
+  faculty: string;   // school-of-* slug
+  dept: string;      // cleaned dept name (id within acadyr+faculty)
   variant: string;
   studyYear: string;
   sem: string;
@@ -51,10 +62,18 @@ export default function TimetablePage() {
 
   const [chosen, setChosen] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState("");
+  const [groupFilter, setGroupFilter] = useState("all");
   const [hovered, setHovered] = useState<Section | null>(null);
   const [dragCourse, setDragCourse] = useState<Course | null>(null);
   const [chooser, setChooser] = useState<Course | null>(null);
   const [toast, setToast] = useState("");
+  // mobile: single-pane view switcher (CSS shows the tabs only on small screens)
+  const [view, setView] = useState<"list" | "grid">("list");
+  // engineering auto-fill panel — collapsed by default on phones
+  const [planOpen, setPlanOpen] = useState(true);
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 900px)").matches) setPlanOpen(false);
+  }, []);
 
   useEffect(() => {
     if (!toast) return;
@@ -91,12 +110,37 @@ export default function TimetablePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chosen, termKey]);
 
-  const variantsOf = (acadyr: string, dept: string) => {
+  // distinct acad years, newest first
+  const acadyrs = useMemo(
+    () => (plans ? [...new Set(plans.programs.map((p) => p.acadyr))].sort().reverse() : []),
+    [plans]
+  );
+  // faculties offered in a given acad year, in canonical group order
+  const facultiesOf = (acadyr: string) => {
+    if (!plans) return [] as { key: string; group: string; name: string }[];
+    const seen = new Map<string, { key: string; group: string; name: string }>();
+    for (const p of plans.programs) {
+      if (p.acadyr !== acadyr || seen.has(p.faculty)) continue;
+      seen.set(p.faculty, { key: p.faculty, group: p.group, name: p.facultyName });
+    }
+    return [...seen.values()].sort(
+      (a, b) => GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group)
+    );
+  };
+  // departments within an acadyr+faculty
+  const deptsOf = (acadyr: string, faculty: string) => {
+    if (!plans) return [] as string[];
+    const seen = new Set<string>();
+    for (const p of plans.programs)
+      if (p.acadyr === acadyr && p.faculty === faculty) seen.add(p.dept);
+    return [...seen];
+  };
+  const variantsOf = (acadyr: string, faculty: string, dept: string) => {
     if (!plans) return [] as { key: string; label: string; program: PlanProgram }[];
     const seen = new Set<string>();
     const out: { key: string; label: string; program: PlanProgram }[] = [];
     for (const p of plans.programs) {
-      if (p.acadyr !== acadyr || p.dept !== dept) continue;
+      if (p.acadyr !== acadyr || p.faculty !== faculty || p.dept !== dept) continue;
       const k = variantKey(p);
       if (seen.has(k)) continue;
       seen.add(k);
@@ -107,22 +151,23 @@ export default function TimetablePage() {
   const programOf = (s: PlanSel | null): PlanProgram | null => {
     if (!plans || !s) return null;
     return plans.programs.find(
-      (p) => p.acadyr === s.acadyr && p.dept === s.dept && variantKey(p) === s.variant
+      (p) => p.acadyr === s.acadyr && p.faculty === s.faculty && p.dept === s.dept && variantKey(p) === s.variant
     ) || null;
   };
 
   useEffect(() => {
     if (!plans || !term || sel) return;
-    const acadyr = plans.programs.some((p) => p.acadyr === term.year)
-      ? term.year
-      : [...new Set(plans.programs.map((p) => p.acadyr))].sort().reverse()[0];
-    const dept = plans.departments[0]?.prefix ?? "EE";
-    const vs = variantsOf(acadyr, dept);
+    const acadyr = acadyrs.includes(term.year) ? term.year : acadyrs[0];
+    const facs = facultiesOf(acadyr);
+    const faculty = facs[0]?.key ?? "";
+    const depts = deptsOf(acadyr, faculty);
+    const dept = depts[0] ?? "";
+    const vs = variantsOf(acadyr, faculty, dept);
     const program = vs[0]?.program;
     const studyYear = program ? Object.keys(program.years).sort((a, b) => +a - +b)[0] : "1";
     const semOpts = program ? Object.keys(program.years[studyYear] || {}) : ["1"];
     const semv = semOpts.includes(term.semester) ? term.semester : semOpts[0];
-    setSel({ acadyr, dept, variant: vs[0]?.key ?? "", studyYear, sem: semv });
+    setSel({ acadyr, faculty, dept, variant: vs[0]?.key ?? "", studyYear, sem: semv });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plans, term]);
 
@@ -134,12 +179,22 @@ export default function TimetablePage() {
     setSel((prev) => {
       if (!prev) return prev;
       const next = { ...prev, ...patch };
-      if (patch.acadyr || patch.dept) {
-        next.variant = variantsOf(next.acadyr, next.dept)[0]?.key ?? "";
+      // cascade: acadyr → faculty → dept → variant → studyYear → sem
+      if (patch.acadyr) {
+        const facs = facultiesOf(next.acadyr);
+        next.faculty = facs.some((f) => f.key === next.faculty) ? next.faculty : facs[0]?.key ?? "";
       }
-      if (patch.acadyr || patch.dept || patch.variant) {
+      if (patch.acadyr || patch.faculty) {
+        const depts = deptsOf(next.acadyr, next.faculty);
+        next.dept = depts.includes(next.dept) ? next.dept : depts[0] ?? "";
+      }
+      if (patch.acadyr || patch.faculty || patch.dept) {
+        const vs = variantsOf(next.acadyr, next.faculty, next.dept);
+        next.variant = vs.some((v) => v.key === next.variant) ? next.variant : vs[0]?.key ?? "";
+      }
+      if (patch.acadyr || patch.faculty || patch.dept || patch.variant) {
         const prog = plans?.programs.find(
-          (p) => p.acadyr === next.acadyr && p.dept === next.dept && variantKey(p) === next.variant
+          (p) => p.acadyr === next.acadyr && p.faculty === next.faculty && p.dept === next.dept && variantKey(p) === next.variant
         );
         const ys = prog ? Object.keys(prog.years).sort((a, b) => +a - +b) : [];
         next.studyYear = ys.includes(next.studyYear) ? next.studyYear : ys[0] ?? "1";
@@ -176,11 +231,23 @@ export default function TimetablePage() {
     return [...seen.values()].reduce((a, b) => a + b, 0);
   }, [chosenSections]);
 
+  // faculty groups present in this term's data, in canonical order
+  const groups = useMemo(() => {
+    const present = new Set(courses.map((c) => c.group));
+    const ordered = GROUP_ORDER.filter((g) => present.has(g));
+    for (const g of present) if (!ordered.includes(g)) ordered.push(g);
+    return ordered;
+  }, [courses]);
+
+  // the engineering major prefix implied by the selected dept (EE/CE/MI/AIE), if any
+  const engPrefix = sel ? ENG_PREFIX_BY_DEPT[sel.dept] : undefined;
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const dept = sel?.dept;
     return courses.filter((c) => {
-      if (dept && MAJOR_PREFIXES.has(c.prefix) && c.prefix !== dept) return false;
+      if (groupFilter !== "all" && c.group !== groupFilter) return false;
+      // within engineering, hide other majors' courses once a major is picked
+      if (engPrefix && MAJOR_PREFIXES.has(c.prefix) && c.prefix !== engPrefix) return false;
       if (!q) return true;
       return (
         c.code.toLowerCase().includes(q) ||
@@ -188,7 +255,7 @@ export default function TimetablePage() {
         c.prefix.toLowerCase().includes(q)
       );
     });
-  }, [courses, query, sel?.dept]);
+  }, [courses, query, engPrefix, groupFilter]);
 
   // chosen courses float to the top so the timetable's subjects are easy to find
   const isChosenCourse = (c: Course) => c.sections.some((s) => chosen.has(s.id));
@@ -239,12 +306,14 @@ export default function TimetablePage() {
     const parts = [`เติม ${res.chosenIds.length} วิชา`];
     if (res.missing.length) parts.push(`ไม่เปิดเทอมนี้ ${res.missing.length} (${res.missing.join(", ")})`);
     setAutoMsg(parts.join(" · "));
+    // surface the filled courses: focus the picker on this faculty's group
+    if (groups.includes(program.group)) setGroupFilter(program.group);
+    // on phones, flip to the grid so the result is visible right away
+    if (window.matchMedia("(max-width: 900px)").matches) setView("grid");
   }
 
-  const deptName = plans?.departments.find((d) => d.prefix === sel?.dept)?.name ?? "";
-
   return (
-    <div className={"tt-shell" + (dragCourse ? " tt-dragging" : "")}>
+    <div className={"tt-shell" + (dragCourse ? " tt-dragging" : "")} data-view={view}>
       <header className="topbar tt-topbar">
         <div className="brand">
           <div className="brand-mark">
@@ -265,7 +334,6 @@ export default function TimetablePage() {
             <span className="mode-pill active">จัดตารางเรียน</span>
           </nav>
         </div>
-        <div />
         <div className="tt-term">
           <select value={termIdx} onChange={(e) => setTermIdx(Number(e.target.value))} aria-label="เลือกเทอม">
             {terms.map((t, i) => (<option key={t.file} value={i}>{t.label}</option>))}
@@ -275,35 +343,46 @@ export default function TimetablePage() {
 
       <div className="tt-body">
         <aside className="tt-picker">
-          <div className="tt-plan">
-            <div className="tt-plan-title">เติมวิชาตามแผนการเรียน</div>
-            {sel && plans ? (
+          <div className={"tt-plan" + (planOpen ? "" : " collapsed")}>
+            <button className="tt-plan-toggle" onClick={() => setPlanOpen((o) => !o)} aria-expanded={planOpen}>
+              <span className="tt-plan-title">⤓ เติมวิชาตามแผนการเรียน</span>
+              <span className="tt-plan-chev">{planOpen ? "▾" : "▸"}</span>
+            </button>
+            {planOpen && (sel && plans ? (
               <>
                 <div className="tt-plan-grid">
                   <label>
                     <span>หลักสูตรปี</span>
                     <select value={sel.acadyr} onChange={(e) => patchSel({ acadyr: e.target.value })}>
-                      {[...new Set(plans.programs.map((p) => p.acadyr))].sort().reverse().map((y) => (
-                        <option key={y} value={y}>{y}</option>
-                      ))}
+                      {acadyrs.map((y) => (<option key={y} value={y}>{y}</option>))}
                     </select>
                   </label>
                   <label>
-                    <span>ภาควิชา</span>
-                    <select value={sel.dept} onChange={(e) => patchSel({ dept: e.target.value })}>
-                      {plans.departments.map((d) => (
-                        <option key={d.prefix} value={d.prefix}>{d.prefix} · {shortDept(d.name)}</option>
+                    <span>คณะ</span>
+                    <select value={sel.faculty} onChange={(e) => patchSel({ faculty: e.target.value })}>
+                      {facultiesOf(sel.acadyr).map((f) => (
+                        <option key={f.key} value={f.key}>{shortFaculty(f.name)}</option>
                       ))}
                     </select>
                   </label>
                   <label className="wide">
-                    <span>รูปแบบ</span>
-                    <select value={sel.variant} onChange={(e) => patchSel({ variant: e.target.value })}>
-                      {variantsOf(sel.acadyr, sel.dept).map((v) => (
-                        <option key={v.key} value={v.key}>{v.label}</option>
+                    <span>สาขาวิชา</span>
+                    <select value={sel.dept} onChange={(e) => patchSel({ dept: e.target.value })}>
+                      {deptsOf(sel.acadyr, sel.faculty).map((d) => (
+                        <option key={d} value={d}>{d}</option>
                       ))}
                     </select>
                   </label>
+                  {variantsOf(sel.acadyr, sel.faculty, sel.dept).length > 1 && (
+                    <label className="wide">
+                      <span>รูปแบบ</span>
+                      <select value={sel.variant} onChange={(e) => patchSel({ variant: e.target.value })}>
+                        {variantsOf(sel.acadyr, sel.faculty, sel.dept).map((v) => (
+                          <option key={v.key} value={v.key}>{v.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                  )}
                   <label>
                     <span>ชั้นปี</span>
                     <select value={sel.studyYear} onChange={(e) => patchSel({ studyYear: e.target.value })}>
@@ -313,7 +392,7 @@ export default function TimetablePage() {
                   <label>
                     <span>ภาคเรียน</span>
                     <select value={sel.sem} onChange={(e) => patchSel({ sem: e.target.value })}>
-                      {sems.map((s) => (<option key={s} value={s}>เทอม {s}</option>))}
+                      {sems.map((s) => (<option key={s} value={s}>{semLabel(s)}</option>))}
                     </select>
                   </label>
                 </div>
@@ -322,17 +401,28 @@ export default function TimetablePage() {
               </>
             ) : (
               <div className="tt-empty">กำลังโหลดแผน…</div>
-            )}
+            ))}
           </div>
 
           <div className="tt-picker-head">
             <input
               className="tt-search"
-              placeholder={`ค้นหาวิชาใน ${deptName ? shortDept(deptName) + " + วิชาทั่วไป" : "รายการ"}…`}
+              placeholder="ค้นหารหัสหรือชื่อวิชา…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <div className="tt-hint-line">ลากวิชาไปวางบนตาราง · หรือกดเพื่อเลือก</div>
+            <select
+              className="tt-fac-select"
+              value={groupFilter}
+              onChange={(e) => setGroupFilter(e.target.value)}
+              aria-label="เลือกคณะ"
+            >
+              <option value="all">ทุกคณะ ({courses.length} วิชา)</option>
+              {groups.map((g) => (
+                <option key={g} value={g}>{groupLabel(g)}</option>
+              ))}
+            </select>
+            <div className="tt-hint-line">กดวิชาเพื่อเลือกเซคชัน · บนคอมลากไปวางบนตารางได้</div>
           </div>
           <div className="tt-course-list">
             {loading ? (
@@ -375,6 +465,18 @@ export default function TimetablePage() {
         </main>
       </div>
 
+      <nav className="tt-view-tabs" aria-label="สลับมุมมอง">
+        <button className={"tt-vt" + (view === "list" ? " active" : "")} onClick={() => setView("list")}>
+          ☰ รายวิชา
+        </button>
+        <button className={"tt-vt" + (view === "grid" ? " active" : "")} onClick={() => setView("grid")}>
+          ▦ ตารางเรียน
+          {chosenSections.length > 0 && (
+            <span className="tt-vt-badge">{new Set(chosenSections.map((s) => s.course)).size}</span>
+          )}
+        </button>
+      </nav>
+
       <footer className="tt-summary">
         <div className="tt-sum-item"><strong>{new Set(chosenSections.map((s) => s.course)).size}</strong> วิชา</div>
         <div className="tt-sum-item"><strong>{totalCredits}</strong> หน่วยกิต</div>
@@ -401,8 +503,11 @@ export default function TimetablePage() {
   );
 }
 
-function shortDept(name: string): string {
-  return name.replace(/^สาขาวิชา|^สาขา/, "");
+function shortFaculty(name: string): string {
+  return name.replace(/^คณะ/, "");
+}
+function semLabel(s: string): string {
+  return s === "3" ? "ซัมเมอร์" : `เทอม ${s}`;
 }
 
 /** Why a course can't be dragged → a short Thai toast telling the user to pick a section. */

@@ -20,15 +20,32 @@ export interface TermInfo {
   count: number;
 }
 
+/** Faculty groups as emitted by Server/tools/scrape_timetable.py. */
+export const GROUP_TH: Record<string, string> = {
+  engineering: "วิศวกรรมศาสตร์",
+  technology: "ไอทีและนวัตกรรม",
+  business: "บริหารธุรกิจ · บัญชี · เศรษฐศาสตร์",
+  communication_arts: "นิเทศศาสตร์",
+  digital_media: "ดิจิทัลมีเดียและภาพยนตร์",
+  architecture: "สถาปัตยกรรมศาสตร์",
+  law: "นิติศาสตร์",
+  hospitality: "การท่องเที่ยวและการโรงแรม",
+  international: "หลักสูตรนานาชาติ (BUIC)",
+  liberal_arts: "ศิลปศาสตร์ · ศิลปกรรม",
+  health: "วิทยาศาสตร์สุขภาพ",
+  service: "วิชาพื้นฐาน (GE / EN / MA …)"
+};
+export const GROUP_ORDER = Object.keys(GROUP_TH);
+export function groupLabel(g: string): string {
+  return GROUP_TH[g] ?? g;
+}
+
 interface RawSection {
   prefix: string;
-  group: "engineering" | "service";
+  group: string; // faculty group key, see GROUP_TH
   course: string;
   course_name: string;
   section: string;
-  seat_total: string;
-  seat_taken: string;
-  seat_left: string;
   status: string; // On | Freeze | Close
   type: string; // LECT | LAB | PRAC | RWS | R/W/C
   day: string;
@@ -51,7 +68,7 @@ export interface Section {
   course: string;
   courseName: string;
   prefix: string;
-  group: "engineering" | "service";
+  group: string;
   section: string;
   credits: number | null;
   meetings: Meeting[];
@@ -71,7 +88,7 @@ export interface Course {
   code: string;
   name: string;
   prefix: string;
-  group: "engineering" | "service";
+  group: string;
   credits: number | null;
   sections: Section[];
 }
@@ -182,38 +199,46 @@ export async function fetchTermCourses(file: string): Promise<Course[]> {
   return groupCourses(data.sections as RawSection[]);
 }
 
-/* ---------------- degree-plan auto-fill (Engineering pilot) ---------------- */
+/* ---------------- degree-plan auto-fill (all faculties) ---------------- */
 
+// Engineering majors share the four-dept course-list filter (one major hides the
+// others). Other faculties don't pre-filter by code prefix.
 export const MAJOR_PREFIXES = new Set(["EE", "CE", "MI", "AIE"]);
 
-export interface DeptMeta { prefix: string; name: string; }
+export interface FacultyMeta { key: string; group: string; nameTh: string; }
 export interface PlanProgram {
   acadyr: string;
-  dept: string;       // major prefix (EE/CE/MI/AIE)
+  faculty: string;     // school-of-* slug
+  group: string;       // timetable faculty group (engineering/business/…)
+  facultyName: string; // Thai faculty name
+  dept: string;        // cleaned Thai dept name — the dept id within acadyr+faculty
   deptName: string;
   track: string;
+  trackName: string;
   plan: string;
   cohort: string;
   years: Record<string, Record<string, string[]>>; // yearLevel -> semester -> [codes]
 }
-export interface EngPlans { meta: any; departments: DeptMeta[]; programs: PlanProgram[]; }
+export interface AllPlans { meta: { faculties: FacultyMeta[]; acadyrs: string[] }; programs: PlanProgram[]; }
+// kept name for back-compat with existing imports
+export type EngPlans = AllPlans;
 
 export function normCode(c: string): string {
   return (c || "").replace(/\s+/g, "").toUpperCase();
 }
 
-export async function fetchPlans(): Promise<EngPlans> {
-  const res = await fetch("/data/eng-plans.json");
+export async function fetchPlans(): Promise<AllPlans> {
+  const res = await fetch("/data/all-plans.json");
   if (!res.ok) throw new Error("plans " + res.status);
   return res.json();
 }
 
-/** A program variant key (track · plan · cohort). */
+/** A program variant key (track · plan · cohort) — unique within acadyr+faculty+dept. */
 export function variantKey(p: PlanProgram): string {
   return `${p.track}|${p.plan}|${p.cohort}`;
 }
 export function variantLabel(p: PlanProgram): string {
-  const t = p.track === "default" ? "" : p.track + " · ";
+  const t = p.track === "default" ? "" : p.trackName + " · ";
   return `${t}${p.plan} · ${p.cohort}`;
 }
 

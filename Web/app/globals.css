@@ -1222,7 +1222,7 @@ button { font-family: inherit; }
   background: var(--paper);
   z-index: 1;
 }
-.tt-topbar { grid-template-columns: auto 1fr auto; }
+.tt-topbar { grid-template-columns: 1fr auto; align-items: center; }
 .tt-term select {
   font-family: var(--font-thai);
   font-size: 13px;
@@ -1264,6 +1264,23 @@ button { font-family: inherit; }
   background: var(--paper);
 }
 .tt-search:focus { border-color: var(--accent); }
+/* faculty filter (select — 12 groups, compact on phone) */
+.tt-fac-select {
+  width: 100%;
+  margin-top: 8px;
+  font-family: var(--font-thai);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.5px solid var(--hairline);
+  border-radius: var(--r-pill);
+  padding: 8px 12px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 140ms ease;
+}
+.tt-fac-select:hover, .tt-fac-select:focus { border-color: var(--bu); }
 .tt-group-filter { display: flex; gap: 6px; margin-top: 9px; }
 .tt-gf {
   flex: 1;
@@ -1342,13 +1359,13 @@ button { font-family: inherit; }
   grid-template-rows: 28px 1fr;
   min-width: 680px;
 }
-.tt-grid-corner { grid-column: 1; grid-row: 1; }
-.tt-grid-days { grid-column: 2; grid-row: 1; display: flex; }
+.tt-grid-corner { grid-column: 1; grid-row: 1; position: sticky; top: 0; left: 0; z-index: 9; background: var(--paper); }
+.tt-grid-days { grid-column: 2; grid-row: 1; display: flex; position: sticky; top: 0; z-index: 8; background: var(--paper); }
 .tt-grid-day-h {
   flex: 1; text-align: center; font-family: var(--font-thai); font-weight: 700;
   font-size: 12.5px; color: var(--ink-soft); padding-bottom: 6px;
 }
-.tt-grid-hours { grid-column: 1; grid-row: 2; position: relative; }
+.tt-grid-hours { grid-column: 1; grid-row: 2; position: sticky; left: 0; z-index: 7; background: var(--paper); }
 .tt-grid-hour {
   border-top: 1px solid var(--hairline-2);
   font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint);
@@ -1406,28 +1423,95 @@ button { font-family: inherit; }
 }
 .tt-clear:hover { border-color: var(--red); color: var(--red); }
 
-/* responsive */
-@media (max-width: 900px) {
-  .tt-body { grid-template-columns: 1fr; grid-template-rows: minmax(180px, 42%) 1fr; }
-  .tt-picker { border-right: none; border-bottom: 1px solid var(--hairline); }
-  .tt-topbar { grid-template-columns: 1fr; gap: 10px; }
-  .mode-switch { justify-self: start; }
+/* mobile view tabs (list ↔ grid) — hidden on desktop */
+.tt-view-tabs { display: none; }
+.tt-vt {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-thai);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  background: var(--paper-2);
+  border: 1.5px solid var(--hairline);
+  border-radius: var(--r-pill);
+  padding: 9px 0;
+  cursor: pointer;
+  transition: all 140ms ease;
 }
-@media (max-width: 640px) {
-  .tt-summary { gap: 12px; padding: 9px 14px; font-size: 12px; flex-wrap: wrap; }
-  .tt-grid { min-width: 560px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .tt-block, .tt-section { animation: none !important; transition: none !important; }
+.tt-vt.active { background: var(--bu); border-color: var(--bu); color: #fff; }
+.tt-vt-badge {
+  min-width: 18px;
+  height: 18px;
+  display: inline-grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0 5px;
 }
 
-/* timetable degree-plan auto-fill panel */
+/* responsive — phone/tablet: single pane + bottom tabs */
+@media (max-width: 900px) {
+  .tt-body { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  .tt-picker { border-right: none; }
+  .tt-shell[data-view="grid"] .tt-picker { display: none; }
+  .tt-shell[data-view="list"] .tt-grid-wrap { display: none; }
+
+  .tt-view-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px 6px;
+    border-top: 1px solid var(--hairline);
+    background: var(--paper-3);
+  }
+  .tt-summary { border-top: none; padding-top: 4px; }
+
+  .tt-topbar { gap: 8px; }
+  .brand { flex-wrap: wrap; row-gap: 6px; }
+  .tt-grid-wrap { padding: 10px; -webkit-overflow-scrolling: touch; }
+  .tt-drag-banner { bottom: 118px; }
+  .tt-toast { bottom: 128px; }
+}
+@media (max-width: 640px) {
+  .tt-summary { gap: 12px; padding: 4px 14px 9px; font-size: 12px; flex-wrap: wrap; }
+  .tt-sum-item strong { font-size: 14px; }
+  .tt-grid { min-width: 560px; }
+  .tt-term select { font-size: 12px; padding: 6px 10px; max-width: 44vw; }
+  .tt-picker-head { padding: 10px 12px 8px; }
+  .tt-course-list { padding: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tt-block, .tt-section, .tt-chooser-card { animation: none !important; transition: none !important; }
+}
+
+/* timetable degree-plan auto-fill panel (collapsible) */
 .tt-plan {
   padding: 12px 14px;
   border-bottom: 1px solid var(--hairline);
   background: var(--bu-tint);
 }
-.tt-plan-title { font-family: var(--font-thai); font-weight: 700; font-size: 12.5px; color: var(--bu); margin-bottom: 9px; }
+.tt-plan.collapsed { padding: 10px 14px; }
+.tt-plan-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.tt-plan:not(.collapsed) .tt-plan-toggle { margin-bottom: 9px; }
+.tt-plan-chev { color: var(--bu); font-size: 11px; }
+.tt-plan-title { font-family: var(--font-thai); font-weight: 700; font-size: 12.5px; color: var(--bu); }
 .tt-plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
 .tt-plan-grid label { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .tt-plan-grid label.wide { grid-column: 1 / -1; }
@@ -1590,3 +1674,19 @@ button { font-family: inherit; }
   border-radius: var(--r-pill); padding: 9px; cursor: pointer; transition: all 140ms ease;
 }
 .tt-chooser-remove:hover { border-color: var(--red); background: rgba(224,49,49,0.06); }
+
+/* phone: section chooser becomes a bottom sheet (must come after base rules) */
+@media (max-width: 640px) {
+  .tt-chooser-overlay { place-items: end center; padding: 0; }
+  .tt-chooser-card {
+    max-width: none;
+    width: 100%;
+    max-height: 86dvh;
+    border-radius: 18px 18px 0 0;
+    border-bottom: none;
+    padding: 18px 16px 16px;
+    animation: sheet-in 240ms var(--spring);
+  }
+}
+@keyframes sheet-in { from { transform: translateY(40px); opacity: 0.6; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .tt-chooser-card { animation: none; } }
