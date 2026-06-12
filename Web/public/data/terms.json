@@ -5,14 +5,14 @@
       "semester": "1",
       "label": "ปี 2568 / เทอม 1",
       "file": "timetable-2568-1.json",
-      "count": 1468
+      "count": 4737
     },
     {
       "year": "2568",
       "semester": "2",
       "label": "ปี 2568 / เทอม 2",
       "file": "timetable-2568-2.json",
-      "count": 1302
+      "count": 4702
     }
   ]
 }
