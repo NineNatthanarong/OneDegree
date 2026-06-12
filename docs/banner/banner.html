@@ -1,0 +1,194 @@
+<!doctype html>
+<!--
+  OneDegree OG banner source (1200x630).
+  Render (from repo root):
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu \
+    --screenshot=Web/public/banner.png --window-size=1200,630 --force-device-scale-factor=2 \
+    --hide-scrollbars --virtual-time-budget=10000 "file://$PWD/docs/banner/banner.html"
+  Fonts are base64-embedded in fonts.css (Kanit + JetBrains Mono) so the
+  render is identical offline. Thai text: keep line-height >= 1.4 and never letter-space.
+-->
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="fonts.css" />
+<style>
+  :root {
+    --bg0: #2A1133;
+    --bg1: #3F194B;
+    --ink: #F4EFF7;
+    --orange: #E56436;
+    --orange-hi: #FF8A5C;
+    --amber: #F9A526;
+    --purple-line: #9A6FB0;
+    --red: #FF6B6B;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative;
+    font-family: "Kanit", "Noto Sans Thai", "Thonburi", sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(430px 430px at 1055px 115px, rgba(229, 100, 54, .22), transparent 70%),
+      radial-gradient(520px 520px at 70px 610px, rgba(154, 111, 176, .18), transparent 70%),
+      linear-gradient(118deg, var(--bg0) 0%, var(--bg1) 58%, #341041 100%);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* transit-map dot grid */
+  body::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, .055) 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    background-position: 6px 10px;
+  }
+  svg.metro { position: absolute; inset: 0; }
+
+  .col { position: absolute; left: 72px; }
+
+  /* brand row */
+  .brand { top: 74px; display: flex; align-items: center; gap: 22px; }
+  .tile {
+    width: 98px; height: 98px; border-radius: 26px;
+    background: #FFFFFF;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .35), 0 0 0 1px rgba(255, 255, 255, .14);
+  }
+  .tile img { width: 80px; height: 80px; }
+  .wordmark { font-size: 86px; font-weight: 700; line-height: 1; letter-spacing: -1px; }
+  .wordmark .one { color: var(--ink); }
+  .wordmark .deg {
+    background: linear-gradient(92deg, var(--orange-hi) 8%, var(--amber) 92%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Thai headline — two-tone, roomy line-height for tone marks */
+  .headline { top: 198px; font-size: 50px; font-weight: 700; line-height: 1.45; }
+  .headline .l2 { color: var(--amber); }
+
+  .sub {
+    top: 362px; max-width: 575px;
+    font-size: 24px; font-weight: 400; line-height: 1.66;
+    color: rgba(244, 239, 247, .80);
+  }
+  .sub b { font-weight: 600; color: rgba(244, 239, 247, .95); }
+
+  .chips { top: 466px; display: flex; gap: 12px; }
+  .chip {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 16px; border-radius: 999px;
+    background: rgba(255, 255, 255, .075);
+    border: 1px solid rgba(255, 255, 255, .17);
+    font-size: 18.5px; font-weight: 500; line-height: 1.4;
+    white-space: nowrap;
+  }
+  .chip i { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+
+  .footer { top: 556px; display: flex; align-items: baseline; gap: 14px; }
+  .footer .url {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 21px; font-weight: 500; color: var(--amber);
+  }
+  .footer .meta { font-size: 19px; line-height: 1.5; color: rgba(244, 239, 247, .60); }
+
+  .station-label { font-size: 19px; font-weight: 500; fill: rgba(244, 239, 247, .85); }
+  .pill-text { font-family: "JetBrains Mono", monospace; font-size: 15px; font-weight: 500; fill: rgba(244, 239, 247, .92); }
+</style>
+</head>
+<body>
+
+<svg class="metro" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Line 1° stub, top-left -->
+  <path d="M -40 40 H 252" stroke="#F9A526" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+  <circle cx="210" cy="40" r="7" fill="#2A1133" stroke="#F9A526" stroke-width="4.5"/>
+  <rect x="264" y="22" width="52" height="36" rx="18" fill="#F9A526"/>
+  <text x="290" y="47" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="19" font-weight="700" fill="#321440">1°</text>
+
+  <!-- Line B: prereq line (purple), crosses Line A then sweeps under the footer -->
+  <path d="M 1000 -40 V 430 Q 1000 452 984.5 467.5 L 868 584 Q 853 599 831 599 H -40"
+        stroke="#9A6FB0" stroke-width="11" stroke-linecap="round" opacity=".85"/>
+  <circle cx="1000" cy="160" r="8" fill="#2A1133" stroke="#9A6FB0" stroke-width="4.5"/>
+  <circle cx="1000" cy="395" r="8" fill="#2A1133" stroke="#9A6FB0" stroke-width="4.5"/>
+  <circle cx="740" cy="599" r="8" fill="#2A1133" stroke="#9A6FB0" stroke-width="4.5"/>
+
+  <!-- Line A: the degree journey (orange), ปี 1 -> graduation -->
+  <path d="M 700 680 V 510 Q 700 488 715.5 472.5 L 884 304 Q 899 289 921 289 H 1240"
+        stroke="#E56436" stroke-width="11" stroke-linecap="round"/>
+
+  <!-- dashed prereq arc ปี2 -> ปี4 -->
+  <path d="M 758 430 Q 700 330 854 334" stroke="#F9A526" stroke-width="2.5"
+        stroke-dasharray="3 8" stroke-linecap="round" opacity=".9"/>
+  <circle cx="758" cy="430" r="3.5" fill="#F9A526"/>
+  <circle cx="854" cy="334" r="3.5" fill="#F9A526"/>
+
+  <!-- stations: ปี 1-4 -->
+  <circle cx="700" cy="560" r="8" fill="#2A1133" stroke="#E56436" stroke-width="4.5"/>
+  <circle cx="758" cy="430" r="8" fill="#2A1133" stroke="#E56436" stroke-width="4.5"/>
+  <circle cx="806" cy="382" r="8" fill="#2A1133" stroke="#E56436" stroke-width="4.5"/>
+  <circle cx="854" cy="334" r="8" fill="#2A1133" stroke="#E56436" stroke-width="4.5"/>
+  <text class="station-label" x="678" y="567" text-anchor="end">ปี 1</text>
+  <text class="station-label" x="780" y="442">ปี 2</text>
+  <text class="station-label" x="828" y="394">ปี 3</text>
+  <text class="station-label" x="876" y="346">ปี 4</text>
+
+  <!-- interchange where the two lines cross -->
+  <circle cx="1000" cy="289" r="12" fill="#FFFFFF"/>
+  <circle cx="1000" cy="289" r="4.5" fill="#2A1133"/>
+
+  <!-- terminus + mortarboard -->
+  <circle cx="1130" cy="289" r="15" fill="#2A1133" stroke="#E56436" stroke-width="6"/>
+  <circle cx="1130" cy="289" r="6" fill="#FFFFFF"/>
+  <rect x="1116" y="206" width="28" height="18" rx="4" fill="#EDE3F2"/>
+  <path d="M 1130 180 L 1178 200 L 1130 220 L 1082 200 Z" fill="#F9A526"/>
+  <path d="M 1130 200 L 1160 232" stroke="#F9A526" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="1160" cy="236" r="4.5" fill="#F9A526"/>
+  <text x="1130" y="345" text-anchor="middle" font-family="Kanit, sans-serif"
+        font-size="21" font-weight="600" fill="#F9A526">รับปริญญา</text>
+
+  <!-- course-code pills -->
+  <g>
+    <rect x="722" y="545" width="78" height="30" rx="15" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"/>
+    <text class="pill-text" x="761" y="565" text-anchor="middle">EE101</text>
+  </g>
+  <g>
+    <rect x="1022" y="146" width="78" height="30" rx="15" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"/>
+    <text class="pill-text" x="1061" y="166" text-anchor="middle">CE221</text>
+  </g>
+  <g>
+    <rect x="1022" y="381" width="86" height="30" rx="15" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.18)"/>
+    <text class="pill-text" x="1065" y="401" text-anchor="middle">AIE412</text>
+  </g>
+</svg>
+
+<div class="col brand">
+  <div class="tile"><img src="../../Web/public/logo.png" alt="" /></div>
+  <div class="wordmark"><span class="one">One</span><span class="deg">Degree</span></div>
+</div>
+
+<div class="col headline">
+  เห็นทั้งเส้นทางการเรียน<br />
+  <span class="l2">จากปี 1 สู่วันรับปริญญา</span>
+</div>
+
+<div class="col sub">
+  แผนที่หลักสูตรอินเทอร์แอกทีฟ ครบทุกคณะของ <b>ม.กรุงเทพ</b><br />
+  ลาก ย้าย หรือถอนวิชา แล้วเห็นผลกระทบทันที
+</div>
+
+<div class="col chips">
+  <div class="chip"><i style="background:var(--purple-line)"></i>วิชาตัวก่อน–ตัวตาม</div>
+  <div class="chip"><i style="background:var(--orange-hi)"></i>จัดตารางเรียนอัตโนมัติ</div>
+  <div class="chip"><i style="background:var(--red)"></i>เช็กเวลาเรียนชนกัน</div>
+</div>
+
+<div class="col footer">
+  <span class="url">onedegree.wiki</span>
+  <span class="meta">มหาวิทยาลัยกรุงเทพ · ทุกคณะ ทุกชั้นปี</span>
+</div>
+
+</body>
+</html>

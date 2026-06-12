@@ -8,3 +8,5 @@
 /Web/node_modules
 /Web/.next
 /Web/out/_next
+/Web/out/timetable
+/Web/out/_not-found
