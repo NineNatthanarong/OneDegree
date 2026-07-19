@@ -52,7 +52,6 @@ interface PlanSel {
 
 export default function TimetablePage() {
   const [terms, setTerms] = useState<TermInfo[]>([]);
-  const [termIdx, setTermIdx] = useState(0);
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -89,7 +88,13 @@ export default function TimetablePage() {
     return () => clearTimeout(t);
   }, [toast]);
 
-  const term = terms[termIdx];
+  // Always lock to the newest scraped term (highest year, then semester).
+  const term = useMemo(() => {
+    if (!terms.length) return undefined;
+    return [...terms].sort((a, b) =>
+      a.year !== b.year ? b.year.localeCompare(a.year) : b.semester.localeCompare(a.semester)
+    )[0];
+  }, [terms]);
   const termKey = term ? `tt-chosen-${term.year}-${term.semester}` : "";
 
   useEffect(() => {
@@ -111,7 +116,7 @@ export default function TimetablePage() {
       })
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [termIdx, term?.file]);
+  }, [term?.file]);
 
   useEffect(() => {
     if (term) localStorage.setItem(termKey, JSON.stringify([...chosen]));
@@ -342,10 +347,8 @@ export default function TimetablePage() {
             <span className="mode-pill active">จัดตารางเรียน</span>
           </nav>
         </div>
-        <div className="tt-term">
-          <select value={termIdx} onChange={(e) => setTermIdx(Number(e.target.value))} aria-label="เลือกเทอม">
-            {terms.map((t, i) => (<option key={t.file} value={i}>{t.label}</option>))}
-          </select>
+        <div className="tt-term" aria-label="เทอมปัจจุบัน">
+          {term ? term.label : "…"}
         </div>
       </header>
 

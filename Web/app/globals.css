@@ -1257,7 +1257,7 @@ button { font-family: inherit; }
   z-index: 1;
 }
 .tt-topbar { grid-template-columns: 1fr auto; align-items: center; }
-.tt-term select {
+.tt-term {
   font-family: var(--font-thai);
   font-size: 13px;
   font-weight: 600;
@@ -1266,10 +1266,8 @@ button { font-family: inherit; }
   border: 1.5px solid var(--hairline);
   border-radius: var(--r-pill);
   padding: 7px 14px;
-  cursor: pointer;
-  outline: none;
+  white-space: nowrap;
 }
-.tt-term select:hover { border-color: var(--bu); }
 
 .tt-body {
   display: grid;
@@ -1517,7 +1515,7 @@ button { font-family: inherit; }
   .tt-summary { gap: 12px; padding: 4px 14px 9px; font-size: 12px; flex-wrap: wrap; }
   .tt-sum-item strong { font-size: 14px; }
   .tt-grid { min-width: 560px; }
-  .tt-term select { font-size: 12px; padding: 6px 10px; max-width: 44vw; }
+  .tt-term { font-size: 12px; padding: 6px 10px; max-width: 44vw; overflow: hidden; text-overflow: ellipsis; }
   .tt-picker-head { padding: 10px 12px 8px; }
   .tt-course-list { padding: 4px; }
 }

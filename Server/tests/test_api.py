@@ -144,6 +144,94 @@ def test_degree_plan_route_requires_ordered_query(client: TestClient) -> None:
     assert response.json()["detail"] == "academic_year is required before faculty_slug"
 
 
+def test_film_specializations_are_separate_tracks(client: TestClient) -> None:
+    base = {
+        "academic_year": "2569",
+        "faculty_slug": "school-of-digital-media-and-cinematic-arts",
+    }
+    department_response = client.get("/api/v1/degree-plan", params=base)
+    departments = department_response.json()["options"]["departments"]
+    film = next(item for item in departments if item["name_th"] == "สาขาวิชาภาพยนตร์")
+
+    track_response = client.get(
+        "/api/v1/degree-plan",
+        params={**base, "department_slug": film["slug"]},
+    )
+    tracks = track_response.json()["options"]["tracks"]
+    assert len(tracks) == 11
+    assert all(track["name"] != "default" for track in tracks)
+
+    writing = next(
+        track for track in tracks if track["name"] == "การผลิตภาพยนตร์กลุ่มการเขียนบท"
+    )
+    plan_response = client.get(
+        "/api/v1/degree-plan",
+        params={**base, "department_slug": film["slug"], "track_slug": writing["slug"]},
+    )
+    plan = plan_response.json()["options"]["plans"][0]
+    response = client.get(
+        "/api/v1/degree-plan",
+        params={
+            **base,
+            "department_slug": film["slug"],
+            "track_slug": writing["slug"],
+            "plan_slug": plan["slug"],
+        },
+    )
+    years = response.json()["degree_plan"]["cohorts"][0]["years"]
+    year_3 = next(year for year in years if year["year"] == 3)
+    year_4 = next(year for year in years if year["year"] == 4)
+    semester_totals = [
+        (len(semester["courses"]), semester["total_credits"])
+        for semester in year_3["semesters"]
+    ]
+    assert semester_totals == [
+        (6, 18),
+        (7, 21),
+    ]
+    assert year_4["total_credits"] == 15
+
+
+@pytest.mark.parametrize(
+    ("academic_year", "department_name", "track_count"),
+    [
+        ("2564", "สาขาภาพยนตร์", 10),
+        ("2565", "สาขาภาพยนตร์", 11),
+        ("2566", "สาขาวิชาภาพยนตร์", 11),
+        ("2567", "สาขาวิชาภาพยนตร์", 11),
+        ("2568", "สาขาวิชาภาพยนตร์", 11),
+        ("2569", "สาขาวิชาภาพยนตร์", 11),
+    ],
+)
+def test_film_track_counts_across_supported_years(
+    client: TestClient,
+    academic_year: str,
+    department_name: str,
+    track_count: int,
+) -> None:
+    base = {
+        "academic_year": academic_year,
+        "faculty_slug": "school-of-digital-media-and-cinematic-arts",
+    }
+    department_response = client.get("/api/v1/degree-plan", params=base)
+    film_departments = [
+        department
+        for department in department_response.json()["options"]["departments"]
+        if "ภาพยนตร์" in department["name_th"]
+    ]
+    assert [department["name_th"] for department in film_departments] == [
+        department_name
+    ]
+
+    track_response = client.get(
+        "/api/v1/degree-plan",
+        params={**base, "department_slug": film_departments[0]["slug"]},
+    )
+    tracks = track_response.json()["options"]["tracks"]
+    assert len(tracks) == track_count
+    assert all(track["name"] != "default" for track in tracks)
+
+
 def test_degree_plan_route_invalid_faculty_returns_404(client: TestClient) -> None:
     response = client.get(
         "/api/v1/degree-plan",

@@ -7,7 +7,7 @@ IT, Health Sciences, and service/GE courses.
 
 Usage:
     python scrape_timetable.py --user ID --password PASS
-    python scrape_timetable.py --user ID --password PASS --year 68 --sem 2
+    python scrape_timetable.py --user ID --password PASS --year 69 --sem 1
     python scrape_timetable.py --user ID --password PASS --groups engineering,service
     python scrape_timetable.py --user ID --password PASS --dry-run
 
@@ -432,7 +432,7 @@ def main() -> None:
     p = argparse.ArgumentParser(description="Scrape BU URSA timetable data")
     p.add_argument("--user", required=True, help="URSA username (student ID)")
     p.add_argument("--password", required=True, help="URSA password")
-    p.add_argument("--year", default="68", help="Academic year code (e.g. 68 = 2568 B.E., default: 68)")
+    p.add_argument("--year", default="69", help="Academic year code (e.g. 69 = 2569 B.E., default: 69)")
     p.add_argument("--sem", default="1", choices=["1", "2", "3"], help="Semester (1/2/3=summer, default: 1)")
     p.add_argument("--groups", default="all",
                    help="Comma-separated groups to scrape (default: all). "

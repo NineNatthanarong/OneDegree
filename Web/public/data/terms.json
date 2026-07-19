@@ -13,6 +13,13 @@
       "label": "ปี 2568 / เทอม 2",
       "file": "timetable-2568-2.json",
       "count": 4702
+    },
+    {
+      "year": "2569",
+      "semester": "1",
+      "label": "ปี 2569 / เทอม 1",
+      "file": "timetable-2569-1.json",
+      "count": 4178
     }
   ]
 }
