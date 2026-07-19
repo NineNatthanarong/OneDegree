@@ -41,6 +41,8 @@ FACULTY_GROUP = {
     "school-of-humanities-and-tourism-management": "hospitality",
     "school-of-fine-and-applied-arts": "liberal_arts",
     "school-of-information-technology-and-innovation": "technology",
+    "bangkok-university-international": "international",
+    "bangkok-university-chinese-international-college": "international",
 }
 # engineering first (pilot), then DB order
 FACULTY_ORDER = ["school-of-engineering"]

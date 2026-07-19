@@ -82,7 +82,7 @@ export interface CourseNode {
 export interface PrereqEdge {
   from: CourseNode;
   to: CourseNode;
-  kind: "pass" | "concurrent";    // pass: must be earlier · concurrent: same-or-earlier
+  kind: "pass" | "taken" | "concurrent"; // pass/taken: earlier · concurrent: same-or-earlier
   clauseIdx: number;              // which clause of `to.preClauses`
   altCount: number;               // total alternatives in that clause
 }

@@ -81,6 +81,20 @@ export default function Canvas({
   const [tip, setTip] = useState<{ x: number; y: number; html: string } | null>(
     null
   );
+  // touch hold-to-preview: a long press shows the tip, finger-lift dismisses it.
+  // We also stamp the last touch time so the synthetic mouse events a tap fires
+  // afterwards don't re-open the tip we just closed.
+  const touchedAtRef = useRef(0);
+  const lpTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lpPosRef = useRef({ x: 0, y: 0 });
+  const previewedRef = useRef(false); // a hold-preview fired → swallow the tap
+  const fromTouch = () => Date.now() - touchedAtRef.current < 700;
+  const clearLongPress = () => {
+    if (lpTimerRef.current) {
+      clearTimeout(lpTimerRef.current);
+      lpTimerRef.current = null;
+    }
+  };
 
   // hover lineage
   const [focus, setFocus] = useState<{
@@ -145,7 +159,7 @@ export default function Canvas({
           if (!alt) continue;
           anyKnown = true;
           const aOrder = order(alt);
-          const ok = cl.kind === "pass" ? aOrder < cOrder : aOrder <= cOrder;
+          const ok = cl.kind === "concurrent" ? aOrder <= cOrder : aOrder < cOrder;
           if (ok) { anyOk = true; break; }
         }
         clauseSatisfied.set(`${c.id}#${ci}`, !anyKnown || anyOk);
@@ -504,9 +518,10 @@ export default function Canvas({
     // render each prereq clause with its kind label
     for (const cl of c.preClauses) {
       const codes = cl.codes.join(" หรือ ");
-      const tag =
-        cl.kind === "concurrent"
-          ? `<span style="color:var(--blue-soft)">เรียนควบคู่ได้</span>`
+      const tag = cl.kind === "concurrent"
+        ? `<span style="color:var(--blue-soft)">เรียนควบคู่ได้</span>`
+        : cl.kind === "taken"
+          ? `<span style="color:var(--blue)">ต้องเคยเรียนมาก่อน</span>`
           : `<span style="color:var(--blue)">ต้องสอบได้ก่อน</span>`;
       lines.push(`${tag} <code>${escapeHtml(codes)}</code>`);
     }
@@ -744,18 +759,72 @@ export default function Canvas({
                             if (e.detail === 0) return;
                             // ignore clicks that came from a pan
                             if (panState.current.panning) return;
+                            // a hold that opened the info preview shouldn't also
+                            // toggle withdrawn — swallow that one synthetic tap.
+                            if (previewedRef.current) {
+                              previewedRef.current = false;
+                              return;
+                            }
                             onToggleWithdrawn(c.id);
                           }}
                           onMouseEnter={(e) => {
+                            if (fromTouch()) return; // ignore synthetic mouse-after-touch
                             showTip(c, e);
                             enterFocus(c);
                           }}
-                          onMouseMove={moveTip}
+                          onMouseMove={(e) => {
+                            if (fromTouch()) return;
+                            moveTip(e);
+                          }}
                           onMouseLeave={() => {
+                            if (fromTouch()) return;
                             hideTip();
                             leaveFocus();
                           }}
                           onMouseDown={(e) => e.stopPropagation()}
+                          onTouchStart={(e) => {
+                            // Hold-to-preview: show the tip only after a short hold so
+                            // a quick tap (toggle-withdraw) doesn't flash it. Lifting
+                            // the finger fires no mouseleave, so we dismiss on touchend.
+                            touchedAtRef.current = Date.now();
+                            previewedRef.current = false;
+                            const t = e.touches[0];
+                            lpPosRef.current = { x: t.clientX, y: t.clientY };
+                            clearLongPress();
+                            lpTimerRef.current = setTimeout(() => {
+                              previewedRef.current = true;
+                              showTip(c, {
+                                clientX: lpPosRef.current.x,
+                                clientY: lpPosRef.current.y
+                              } as React.MouseEvent);
+                              enterFocus(c);
+                            }, 240);
+                          }}
+                          onTouchMove={(e) => {
+                            const t = e.touches[0];
+                            if (
+                              Math.hypot(
+                                t.clientX - lpPosRef.current.x,
+                                t.clientY - lpPosRef.current.y
+                              ) > 12
+                            ) {
+                              clearLongPress();
+                              hideTip();
+                              leaveFocus();
+                            }
+                          }}
+                          onTouchEnd={() => {
+                            touchedAtRef.current = Date.now();
+                            clearLongPress();
+                            hideTip();
+                            leaveFocus();
+                          }}
+                          onTouchCancel={() => {
+                            touchedAtRef.current = Date.now();
+                            clearLongPress();
+                            hideTip();
+                            leaveFocus();
+                          }}
                         >
                           <div className="course-code">
                             <span>{c.code || "—"}</span>

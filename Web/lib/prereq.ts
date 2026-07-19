@@ -6,19 +6,21 @@
  *   "สอบได้ EL 214 หรือ EL 216"            → must-pass: EITHER (OR alternatives)
  *   "สอบได้ EL 331 หรือเรียนควบคู่กัน"      → must-pass OR taken concurrently
  *   "EE 312 หรือ เรียน ควบคู่กัน"           → (สอบได้ implicit) pass-or-concurrent
+ *   "เคยเรียน IEN 108"                       → previously taken (a grade of F is allowed)
  *
  * "และ" = AND  → splits into separate clauses (all required)
  * "หรือ" between codes = OR alternatives (any one satisfies the clause)
- * "ควบคู่" / "เรียนควบคู่กัน" = concurrent modifier
- *   when present, every clause's kind becomes 'concurrent'.
+ * "ควบคู่" / "เรียนควบคู่กัน" = concurrent modifier for its own clause.
+ * For example, "สอบได้ MK 101 และ BA 207 หรือเรียนควบคู่กัน" means
+ * MK 101 must be passed, while BA 207 may be passed or taken in parallel.
  */
 
-export type PrereqKind = "pass" | "concurrent";
+export type PrereqKind = "pass" | "concurrent" | "taken";
 
 export interface PrereqClause {
   /** Course codes that satisfy this clause (alternatives via หรือ). */
   codes: string[];
-  /** Whether the prereq must be completed earlier, or may be taken concurrently. */
+  /** Whether it must be passed, previously taken, or may be taken concurrently. */
   kind: PrereqKind;
 }
 
@@ -49,24 +51,23 @@ export function parsePrereqClauses(
   const trimmed = raw.trim();
   if (!trimmed || trimmed === "-" || trimmed === "—") return [];
 
-  // Concurrent modifier anywhere in the string flips every clause to 'concurrent'.
-  const hasConcurrent = /ควบ\s*คู่/.test(trimmed);
-
-  // Strip the concurrent phrasing so it doesn't pollute splitting/extraction.
-  let s = trimmed
-    .replace(/(หรือ\s*)?(เรียน\s*)?ควบ\s*คู่กัน?/g, " ")
-    .replace(/(หรือ\s*)?(เรียน\s*)?ควบ\s*คู่/g, " ");
-
-  // Strip the must-pass keyword; its presence is implied for plain code lists.
-  s = s.replace(/สอบได้/g, " ").replace(/^\s*ผ่าน/, " ").trim();
-
-  // Split into AND-parts. All AND-parts must be satisfied.
-  const andParts = s.split(/และ/);
-
-  const kind: PrereqKind = hasConcurrent ? "concurrent" : "pass";
+  // Split first: "และ" creates independent requirements, and a parallel
+  // modifier applies only to the requirement it appears with.
+  const andParts = trimmed.split(/และ/);
   const clauses: PrereqClause[] = [];
 
-  for (const part of andParts) {
+  for (const rawPart of andParts) {
+    const kind: PrereqKind = /ควบ\s*คู่/.test(rawPart)
+      ? "concurrent"
+      : /เคยเรียน|previously\s+taken|previously\s+enrolled/i.test(rawPart)
+        ? "taken"
+        : "pass";
+    const part = rawPart
+      .replace(/(หรือ\s*)?(เรียน\s*)?ควบ\s*คู่กัน?/g, " ")
+      .replace(/(หรือ\s*)?(เรียน\s*)?ควบ\s*คู่/g, " ")
+      .replace(/สอบได้/g, " ")
+      .replace(/^\s*ผ่าน/, " ")
+      .trim();
     // Codes inside an AND-part are alternatives (often joined by หรือ; even when
     // หรือ is missing we treat sibling codes as alternatives — the safer default).
     const codes = extractCodes(part);

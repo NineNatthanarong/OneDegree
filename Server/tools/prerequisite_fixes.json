@@ -1,0 +1,18 @@
+{
+  "fixes": [
+    {
+      "years": "all",
+      "faculty": "school-of-fine-and-applied-arts",
+      "course_code": "FA 377",
+      "set_prerequisite": "สอบได้ CO 301 และ นักศึกษาต้องลงทะเบียนและสอบผ่านในกลุ่มวิชาเฉพาะด้าน-บังคับแล้วไม่น้อยกว่า 30 หน่วยกิต",
+      "reason": "Verified against the official BU 2569 Fine and Applied Arts degree-plan PDF: CO 301 must be passed; the 30-credit requirement is separate and is not a parallel-study rule."
+    },
+    {
+      "years": ["2569"],
+      "faculty": "school-of-business-administration",
+      "course_code": "DMK 412",
+      "set_prerequisite": "สอบได้ BUS 101",
+      "reason": "Verified against the official BU 2569 Business Administration degree-plan PDF."
+    }
+  ]
+}

@@ -69,10 +69,18 @@ export default function TimetablePage() {
   const [toast, setToast] = useState("");
   // mobile: single-pane view switcher (CSS shows the tabs only on small screens)
   const [view, setView] = useState<"list" | "grid">("list");
+  // phones use a separate list/grid pane, so drag-to-table is impossible there:
+  // every course tap opens the section chooser instead. Tracked live on resize.
+  const [isPhone, setIsPhone] = useState(false);
   // engineering auto-fill panel — collapsed by default on phones
   const [planOpen, setPlanOpen] = useState(true);
   useEffect(() => {
-    if (window.matchMedia("(max-width: 900px)").matches) setPlanOpen(false);
+    const mq = window.matchMedia("(max-width: 900px)");
+    const sync = () => setIsPhone(mq.matches);
+    sync();
+    if (mq.matches) setPlanOpen(false);
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
   useEffect(() => {
@@ -422,7 +430,9 @@ export default function TimetablePage() {
                 <option key={g} value={g}>{groupLabel(g)}</option>
               ))}
             </select>
-            <div className="tt-hint-line">กดวิชาเพื่อเลือกเซคชัน · บนคอมลากไปวางบนตารางได้</div>
+            <div className="tt-hint-line">
+              {isPhone ? "แตะวิชาเพื่อเลือกเซคชันแล้วเพิ่มลงตาราง" : "กดวิชาเพื่อเลือกเซคชัน · บนคอมลากไปวางบนตารางได้"}
+            </div>
           </div>
           <div className="tt-course-list">
             {loading ? (
@@ -435,14 +445,14 @@ export default function TimetablePage() {
                   <div className="tt-list-label">📌 วิชาในตาราง ({chosenCourses.length})</div>
                 )}
                 {chosenCourses.map((c) => (
-                  <CourseItem key={c.code} course={c} chosen={chosen} conflicts={conflicts}
+                  <CourseItem key={c.code} course={c} chosen={chosen} conflicts={conflicts} isPhone={isPhone}
                     onToggle={pickSection} onHover={setHovered} onDragCourse={setDragCourse} onChooser={setChooser} onToast={setToast} />
                 ))}
                 {chosenCourses.length > 0 && restCourses.length > 0 && (
                   <div className="tt-list-label muted">วิชาทั้งหมด</div>
                 )}
                 {restCourses.map((c) => (
-                  <CourseItem key={c.code} course={c} chosen={chosen} conflicts={conflicts}
+                  <CourseItem key={c.code} course={c} chosen={chosen} conflicts={conflicts} isPhone={isPhone}
                     onToggle={pickSection} onHover={setHovered} onDragCourse={setDragCourse} onChooser={setChooser} onToast={setToast} />
                 ))}
               </>
@@ -456,6 +466,7 @@ export default function TimetablePage() {
             conflicts={conflicts}
             ghost={hovered}
             dragCourse={dragCourse}
+            isPhone={isPhone}
             onSelect={selectSection}
             onDragCourse={setDragCourse}
             onChooser={setChooser}
@@ -519,25 +530,32 @@ function dragBlockMsg(course: Course): string {
 
 /* ============== course list item ============== */
 function CourseItem({
-  course, chosen, conflicts, onToggle, onHover, onDragCourse, onChooser, onToast
+  course, chosen, conflicts, onToggle, onHover, onDragCourse, onChooser, onToast, isPhone
 }: {
   course: Course; chosen: Set<string>; conflicts: Set<string>;
   onToggle: (s: Section) => void; onHover: (s: Section | null) => void;
   onDragCourse: (c: Course | null) => void; onChooser: (c: Course) => void;
-  onToast: (m: string) => void;
+  onToast: (m: string) => void; isPhone: boolean;
 }) {
   const anyChosen = course.sections.some((s) => chosen.has(s.id));
   const [open, setOpen] = useState(false);
   const expanded = open || anyChosen;
   const eligible = dragEligible(course);
 
+  // Phones can't drag list → grid (separate panes) and inline sections are
+  // cramped, so a tap opens the chooser sheet for every course.
+  function handleClick() {
+    if (isPhone || !eligible) onChooser(course);
+    else setOpen((o) => !o);
+  }
+
   return (
     <div className={"tt-course" + (anyChosen ? " has-chosen" : "")}>
       <button
         className="tt-course-head"
-        onClick={() => (eligible ? setOpen((o) => !o) : onChooser(course))}
-        draggable
-        onDragStart={(e) => {
+        onClick={handleClick}
+        draggable={!isPhone}
+        onDragStart={isPhone ? undefined : (e) => {
           if (eligible) {
             onDragCourse(course);
             e.dataTransfer.effectAllowed = "copy";
@@ -548,20 +566,24 @@ function CourseItem({
             onChooser(course);
           }
         }}
-        onDragEnd={() => onDragCourse(null)}
-        title={eligible ? "ลากไปวางบนตาราง" : "หลายเซคชัน ลากไม่ได้ · กดเพื่อเลือก"}
+        onDragEnd={isPhone ? undefined : () => onDragCourse(null)}
+        title={isPhone ? "แตะเพื่อเลือกเซคชัน" : eligible ? "ลากไปวางบนตาราง" : "หลายเซคชัน ลากไม่ได้ · กดเพื่อเลือก"}
       >
-        {eligible
+        {isPhone
+          ? <span className={"tt-tap-add" + (anyChosen ? " on" : "")} aria-hidden="true">{anyChosen ? "✓" : "＋"}</span>
+          : eligible
           ? <span className="tt-drag-grip" aria-hidden="true">⠿</span>
           : <span className="tt-many" aria-hidden="true" title="หลายเซคชัน">▦</span>}
         <span className="tt-course-code">{course.code}</span>
         <span className="tt-course-name">{course.name}</span>
         <span className="tt-course-meta">
           {course.credits != null ? `${course.credits} นก.` : "—"}
-          {eligible ? <span className="tt-course-arrow">{expanded ? "▾" : "▸"}</span> : <span className="tt-course-arrow">⤢</span>}
+          {isPhone ? <span className="tt-course-arrow">⤢</span>
+            : eligible ? <span className="tt-course-arrow">{expanded ? "▾" : "▸"}</span>
+            : <span className="tt-course-arrow">⤢</span>}
         </span>
       </button>
-      {eligible && expanded && (
+      {!isPhone && eligible && expanded && (
         <div className="tt-sections">
           {course.sections.map((s) => {
             const isChosen = chosen.has(s.id);
@@ -667,10 +689,10 @@ function ChooserCard({
 
 /* ============== weekly grid ============== */
 function WeekGrid({
-  sections, conflicts, ghost, dragCourse, onSelect, onDragCourse, onChooser, onToast, courseByCode
+  sections, conflicts, ghost, dragCourse, isPhone, onSelect, onDragCourse, onChooser, onToast, courseByCode
 }: {
   sections: Section[]; conflicts: Set<string>; ghost: Section | null;
-  dragCourse: Course | null; onSelect: (s: Section) => void;
+  dragCourse: Course | null; isPhone: boolean; onSelect: (s: Section) => void;
   onDragCourse: (c: Course | null) => void; onChooser: (c: Course) => void;
   onToast: (m: string) => void;
   courseByCode: Map<string, Course>;
@@ -732,10 +754,10 @@ function WeekGrid({
               return (
                 <div key={i} className={"tt-block tt-block-live" + (bad ? " conflict" : "")}
                   style={{ top, height, ["--c" as never]: courseColor(s.course) }}
-                  title={`${s.course} ${s.section} · ${m.time} · ${fmtRoom(m.room)} — ${eligible ? "ลากเพื่อเปลี่ยน หรือกดเพื่อเลือก" : "หลายเซคชัน · กดเพื่อเลือก"}`}
-                  draggable
+                  title={`${s.course} ${s.section} · ${m.time} · ${fmtRoom(m.room)} — ${isPhone ? "แตะเพื่อเปลี่ยนเซคชัน" : eligible ? "ลากเพื่อเปลี่ยน หรือกดเพื่อเลือก" : "หลายเซคชัน · กดเพื่อเลือก"}`}
+                  draggable={!isPhone}
                   onClick={() => course && onChooser(course)}
-                  onDragStart={(e) => {
+                  onDragStart={isPhone ? undefined : (e) => {
                     if (course && eligible) {
                       onDragCourse(course); e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", s.course);
                     } else {
@@ -743,8 +765,8 @@ function WeekGrid({
                       if (course) { onToast(dragBlockMsg(course)); onChooser(course); }
                     }
                   }}
-                  onDragEnd={() => onDragCourse(null)}>
-                  {eligible && <span className="tt-block-grip" aria-hidden="true">⠿</span>}
+                  onDragEnd={isPhone ? undefined : () => onDragCourse(null)}>
+                  {eligible && !isPhone && <span className="tt-block-grip" aria-hidden="true">⠿</span>}
                   <span className="tt-block-code">{s.course} <small>{s.section}</small></span>
                   <span className="tt-block-name">{s.courseName}</span>
                   <span className="tt-block-time">{m.time}</span>

@@ -94,8 +94,8 @@ export function computeUnavailable(
 }
 
 /** A course "violates placement" if for at least one of its clauses, no
- *  alternative satisfies the temporal constraint (pass: alt strictly earlier;
- *  concurrent: alt earlier-or-same). */
+ *  alternative satisfies the temporal constraint (pass/taken: alt strictly
+ *  earlier; concurrent: alt earlier-or-same). */
 export function computeViolations(
   courses: CourseNode[],
   manualMoves: Map<string, { yearIdx: number; semIdx: number }>
@@ -122,7 +122,7 @@ export function computeViolations(
         anyKnown = true;
         const alt = courseById.get(altId)!;
         const aOrder = order(alt);
-        const ok = cl.kind === "pass" ? aOrder < cOrder : aOrder <= cOrder;
+        const ok = cl.kind === "concurrent" ? aOrder <= cOrder : aOrder < cOrder;
         if (ok) { anyOk = true; break; }
       }
       if (anyKnown && !anyOk) { viol.add(c.id); break; }

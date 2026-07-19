@@ -1550,6 +1550,16 @@ button { font-family: inherit; }
 .tt-drag-grip { color: var(--ink-faint); font-size: 11px; cursor: grab; margin-right: 2px; }
 .tt-course-head[draggable="true"] { cursor: grab; }
 .tt-course-head[draggable="true"]:active { cursor: grabbing; }
+/* phone: tap-to-add affordance replacing the desktop drag grip */
+.tt-tap-add {
+  display: inline-grid; place-items: center;
+  width: 19px; height: 19px; border-radius: 50%;
+  font-size: 13px; font-weight: 700; line-height: 1;
+  color: var(--accent);
+  background: var(--accent-tint, rgba(229, 100, 54, .12));
+  border: 1.5px solid currentColor;
+}
+.tt-tap-add.on { color: #fff; background: var(--bu); border-color: var(--bu); }
 .tt-grid { position: relative; }
 /* NOTE: do NOT set pointer-events:none on the dragged block — Chrome aborts an
    in-progress drag if its source becomes non-interactive. Hints sit above

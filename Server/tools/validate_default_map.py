@@ -39,6 +39,7 @@ DEFAULT_YEARS = ["2564", "2565", "2566", "2567", "2568", "2569"]
 # ----------------------------------------------------------------------------
 _CODE_RE = re.compile(r"([A-Z](?:\s*[A-Z]){0,3})\s*(\d(?:\s*\d){2,3})")
 _CONCURRENT_RE = re.compile(r"ควบ\s*คู่")
+_TAKEN_RE = re.compile(r"เคยเรียน|previously\s+taken|previously\s+enrolled", re.I)
 _STRIP_CONC_1 = re.compile(r"(หรือ\s*)?(เรียน\s*)?ควบ\s*คู่กัน?")
 _STRIP_CONC_2 = re.compile(r"(หรือ\s*)?(เรียน\s*)?ควบ\s*คู่")
 _STRIP_SOBDAI = re.compile(r"สอบได้")
@@ -63,25 +64,27 @@ def extract_codes(s: str) -> list[str]:
 
 
 def parse_prereq_clauses(raw: Optional[str]) -> list[dict[str, Any]]:
-    """Returns list of {codes: [str], kind: 'pass'|'concurrent'}."""
+    """Returns list of {codes: [str], kind: pass/taken/concurrent}."""
     if not raw:
         return []
     trimmed = raw.strip()
     if not trimmed or trimmed in ("-", "—"):
         return []
 
-    has_concurrent = bool(_CONCURRENT_RE.search(trimmed))
-
-    s = _STRIP_CONC_1.sub(" ", trimmed)
-    s = _STRIP_CONC_2.sub(" ", s)
-    s = _STRIP_SOBDAI.sub(" ", s)
-    s = _STRIP_LEAD_PHAN.sub(" ", s).strip()
-
-    and_parts = _SPLIT_AND.split(s)
-    kind = "concurrent" if has_concurrent else "pass"
+    # A parallel modifier applies only to its AND-clause.  E.g. "A และ B
+    # หรือเรียนควบคู่กัน" requires A to have been passed, while B can be
+    # passed or studied in parallel.
+    and_parts = _SPLIT_AND.split(trimmed)
 
     clauses: list[dict[str, Any]] = []
-    for part in and_parts:
+    for raw_part in and_parts:
+        kind = "concurrent" if _CONCURRENT_RE.search(raw_part) else (
+            "taken" if _TAKEN_RE.search(raw_part) else "pass"
+        )
+        part = _STRIP_CONC_1.sub(" ", raw_part)
+        part = _STRIP_CONC_2.sub(" ", part)
+        part = _STRIP_SOBDAI.sub(" ", part)
+        part = _STRIP_LEAD_PHAN.sub(" ", part).strip()
         codes = extract_codes(part)
         if not codes:
             continue
@@ -146,11 +149,11 @@ def order_of(n: Node) -> int:
 
 def compute_violations(nodes: list[Node]) -> list[dict[str, Any]]:
     """Mirror graph.ts computeViolations with empty manualMoves.
-    codeToId: last occurrence wins (exactly as the TS Map.set loop)."""
+    The client keeps the first placement for a duplicated placeholder/code."""
     code_to_node: dict[str, Node] = {}
     for n in nodes:
-        if n.code_norm:
-            code_to_node[n.code_norm] = n  # last wins
+        if n.code_norm and n.code_norm not in code_to_node:
+            code_to_node[n.code_norm] = n
 
     violations: list[dict[str, Any]] = []
     for n in nodes:
@@ -168,7 +171,7 @@ def compute_violations(nodes: list[Node]) -> list[dict[str, Any]]:
                     continue
                 any_known = True
                 a_order = order_of(alt)
-                ok = (a_order < c_order) if cl["kind"] == "pass" else (a_order <= c_order)
+                ok = (a_order <= c_order) if cl["kind"] == "concurrent" else (a_order < c_order)
                 rel = ("earlier" if a_order < c_order
                        else "same" if a_order == c_order else "later")
                 alts_detail.append({

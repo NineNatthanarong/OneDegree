@@ -47,6 +47,16 @@
         "nameTh": "คณะมนุษยศาสตร์และการจัดการการท่องเที่ยว"
       },
       {
+        "key": "bangkok-university-chinese-international-college",
+        "group": "international",
+        "nameTh": "วิทยาลัยนานาชาติจีน"
+      },
+      {
+        "key": "bangkok-university-international",
+        "group": "international",
+        "nameTh": "วิทยาลัยนานาชาติ"
+      },
+      {
         "key": "school-of-law",
         "group": "law",
         "nameTh": "คณะนิติศาสตร์"
@@ -12783,6 +12793,508 @@
           ],
           "2": [
             "EN400"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2564",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business english",
+      "deptName": "business english",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IEN103",
+            "IEN104",
+            "IEN105",
+            "IGE001",
+            "IGE002",
+            "IGE003"
+          ],
+          "2": [
+            "IGE004",
+            "IGE005",
+            "IGE006",
+            "IGE007",
+            "IGE008",
+            "IBA101"
+          ]
+        },
+        "2": {
+          "1": [
+            "IMG101",
+            "IEN201",
+            "IEN202",
+            "IEN217",
+            "IEN218"
+          ],
+          "2": [
+            "ICS202",
+            "IMG112",
+            "IMK212",
+            "IEN219",
+            "IEN220"
+          ]
+        },
+        "3": {
+          "1": [
+            "IEN222",
+            "IEN226",
+            "IEN227",
+            "IEN411",
+            "IEN227"
+          ],
+          "2": [
+            "IEN412",
+            "IEN302",
+            "IEN412",
+            "IEN413"
+          ]
+        },
+        "4": {
+          "1": [
+            "IEN421",
+            "ICO301"
+          ],
+          "2": [
+            "IEN430"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2564",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "communication strategy and ideation",
+      "deptName": "communication strategy and ideation",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE001",
+            "IGE002",
+            "IGE003",
+            "IEN105",
+            "CAI101",
+            "CAI104"
+          ],
+          "2": [
+            "IGE004",
+            "IGE006",
+            "IEN103",
+            "IEN104",
+            "CAI105",
+            "CAI108",
+            "CAI109",
+            "CAI109"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE005",
+            "IGE007",
+            "IGE008",
+            "CAI102",
+            "CAI103",
+            "CAI111",
+            "CSI201",
+            "CSI203"
+          ],
+          "2": [
+            "CAI106",
+            "CAI107",
+            "CSI100",
+            "CSI200",
+            "CSI202",
+            "CSI202"
+          ]
+        },
+        "3": {
+          "1": [
+            "CSI311",
+            "CSI312",
+            "CSI313",
+            "CSI314",
+            "CSI315",
+            "CSI316"
+          ],
+          "2": [
+            "CSI321",
+            "CSI322",
+            "CSI323",
+            "CSI324",
+            "CSI325",
+            "CSI204",
+            "CSI402"
+          ]
+        },
+        "4": {
+          "1": [
+            "CAI112",
+            "CSI400",
+            "CSI401"
+          ],
+          "2": [
+            "CSI403",
+            "CSI402",
+            "CSI404"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2564",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "digital media and design",
+      "deptName": "digital media and design",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IDM113",
+            "IDM114",
+            "IDM115",
+            "IEN105",
+            "IGE001",
+            "IGE002",
+            "IGE003"
+          ],
+          "2": [
+            "IDM123",
+            "IDM124",
+            "IDM125",
+            "IEN103",
+            "IGE004",
+            "IGE005"
+          ]
+        },
+        "2": {
+          "1": [
+            "IDM215",
+            "IDM217",
+            "IDM218",
+            "IDM220",
+            "IGE006",
+            "IGE007",
+            "IGE008"
+          ],
+          "2": [
+            "IDM219",
+            "IDM225",
+            "IDM226",
+            "IDM227",
+            "IDM228",
+            "IEN104"
+          ]
+        },
+        "3": {
+          "1": [
+            "IDM310",
+            "IDM314",
+            "IDM321",
+            "IDM334",
+            "ICO301"
+          ],
+          "2": [
+            "IDM320",
+            "IDM323",
+            "IDM471"
+          ]
+        },
+        "4": {
+          "1": [
+            "IDM425"
+          ],
+          "2": [
+            "IDM426",
+            "IDM426"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2564",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "international tourism and hospitality management",
+      "deptName": "international tourism and hospitality management",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE001",
+            "IGE002",
+            "IGE003",
+            "IEN103",
+            "IEN104",
+            "IEN105"
+          ],
+          "2": [
+            "IGE004",
+            "IGE005",
+            "IGE006",
+            "IGE007",
+            "IGE008",
+            "THI101",
+            "THI102"
+          ]
+        },
+        "2": {
+          "1": [
+            "THI201",
+            "THI202",
+            "THI203",
+            "THI204",
+            "THI205"
+          ],
+          "2": [
+            "THI206",
+            "THI211",
+            "THI311",
+            "THI312"
+          ]
+        },
+        "3": {
+          "1": [
+            "THI313",
+            "THI314"
+          ],
+          "2": [
+            "THI391",
+            "THI411",
+            "THI412",
+            "THI411",
+            "THI412"
+          ],
+          "3": [
+            "THI392"
+          ]
+        },
+        "4": {
+          "1": [
+            "THI413",
+            "THI414",
+            "THI415",
+            "THI415",
+            "ICO301"
+          ],
+          "2": [
+            "THI493",
+            "THI399"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2564",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "marketing",
+      "deptName": "marketing",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE001",
+            "IGE002",
+            "IEN104",
+            "IEN105",
+            "IEC203",
+            "IMG101"
+          ],
+          "2": [
+            "IAC102",
+            "IGE003",
+            "IGE004",
+            "IGE005",
+            "IMG112",
+            "IMK212"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE006",
+            "IGE007",
+            "IGE008",
+            "IEN103",
+            "IFI212",
+            "ILA102",
+            "IMG211",
+            "IAC102"
+          ],
+          "2": [
+            "IST202",
+            "IPM213",
+            "IMG212",
+            "IMK321",
+            "ICS202",
+            "ILA301"
+          ]
+        },
+        "3": {
+          "1": [
+            "IMK322",
+            "IMK329",
+            "IMK335",
+            "IMK427",
+            "IPM323",
+            "IMG311"
+          ],
+          "2": [
+            "IMA104",
+            "IMK337",
+            "IMK421",
+            "IMK426",
+            "IMK429",
+            "IMK423"
+          ]
+        },
+        "4": {
+          "1": [
+            "IAC203",
+            "ICO301"
+          ],
+          "2": [
+            "IMK423",
+            "IMK430"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2564",
+      "faculty": "bangkok-university-chinese-international-college",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติจีน",
+      "dept": "ภาษาจีนธุรกิจ",
+      "deptName": "ภาษาจีนธุรกิจ",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "CGE001",
+            "CBL161",
+            "CGE001",
+            "CGE002",
+            "CGE003",
+            "CEN001",
+            "CBL111"
+          ],
+          "2": [
+            "CGE004",
+            "CGE005",
+            "CGE006",
+            "CEN002",
+            "CBL121",
+            "CBL131"
+          ],
+          "3": [
+            "CBL161",
+            "CGE001",
+            "CGE007"
+          ]
+        },
+        "2": {
+          "1": [
+            "CEN003",
+            "CGE007",
+            "CBL212",
+            "CBL222",
+            "CBL232",
+            "CBL241",
+            "CBL271",
+            "CEN001",
+            "CGE002",
+            "CGE003",
+            "CBL111"
+          ],
+          "2": [
+            "CBL213",
+            "CBL223",
+            "CBL233",
+            "CBL242",
+            "CBL262",
+            "CBL263",
+            "CEN002",
+            "CGE003"
+          ],
+          "3": [
+            "CGE002",
+            "CGE003"
+          ]
+        },
+        "3": {
+          "1": [
+            "CBL314",
+            "CBL343",
+            "CBL364",
+            "CBL372",
+            "CBI380",
+            "CBI385",
+            "CEN003",
+            "CBL212",
+            "CBT380",
+            "CBT381"
+          ],
+          "2": [
+            "CBL315",
+            "CBL365",
+            "CBL373",
+            "CBI381",
+            "CBI382",
+            "CBI383",
+            "CBL262",
+            "CBL315",
+            "CBT382",
+            "CBT383",
+            "CBT384"
+          ]
+        },
+        "4": {
+          "1": [
+            "CBL451",
+            "CBI480",
+            "CBI481",
+            "CBI482",
+            "CBL364",
+            "CBL451",
+            "CBT480",
+            "CBT481",
+            "CBT482"
+          ],
+          "2": [
+            "CBI483",
+            "CBI484",
+            "CBT483",
+            "CBT484"
           ]
         }
       }
@@ -28768,6 +29280,481 @@
     },
     {
       "acadyr": "2565",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business english",
+      "deptName": "business english",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IEN106",
+            "IEN107",
+            "IEN108",
+            "IGE101",
+            "IGE102",
+            "IGE103"
+          ],
+          "2": [
+            "IGE104",
+            "IGE105",
+            "IGE006",
+            "IGE107",
+            "IMG101",
+            "IEN202"
+          ]
+        },
+        "2": {
+          "1": [
+            "IBA101",
+            "IEN201",
+            "IEN217",
+            "IEN218"
+          ],
+          "2": [
+            "ICS202",
+            "IMG112",
+            "IMK212",
+            "IEN219",
+            "IEN220"
+          ]
+        },
+        "3": {
+          "1": [
+            "IEN222",
+            "IEN226",
+            "IEN227",
+            "IEN411"
+          ],
+          "2": [
+            "IEN302",
+            "IEN412",
+            "IEN413"
+          ]
+        },
+        "4": {
+          "1": [
+            "IEN421",
+            "ICO301"
+          ],
+          "2": [
+            "IEN430"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2565",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "communication strategy and ideation",
+      "deptName": "communication strategy and ideation",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "CAI104",
+            "IEN108",
+            "IGE103"
+          ],
+          "2": [
+            "IEN106",
+            "IEN107",
+            "CAI105"
+          ]
+        },
+        "2": {
+          "3": [
+            "IGE103"
+          ],
+          "1": [
+            "CAI102",
+            "CAI103",
+            "CAI104",
+            "CAI111",
+            "CSI201",
+            "CSI203"
+          ],
+          "2": [
+            "CAI107"
+          ]
+        },
+        "3": {
+          "2": [
+            "IMI203",
+            "CSI325",
+            "CSI204"
+          ],
+          "1": [
+            "CSI311",
+            "IMI202",
+            "CAI111",
+            "IEN108"
+          ]
+        },
+        "4": {
+          "2": [
+            "CSI506",
+            "CSI404",
+            "CSI403"
+          ],
+          "1": [
+            "CAI112",
+            "CSI401"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2565",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "digital media and design",
+      "deptName": "digital media and design",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IDM113",
+            "IDM114",
+            "IDM115",
+            "IEN108",
+            "IGE101",
+            "IGE102",
+            "IGE103"
+          ],
+          "2": [
+            "IDM123",
+            "IDM124",
+            "IDM125",
+            "IEN106",
+            "IGE104",
+            "IGE105"
+          ]
+        },
+        "2": {
+          "1": [
+            "IDM215",
+            "IDM217",
+            "IDM218",
+            "IDM220",
+            "IGE106",
+            "IGE107"
+          ],
+          "2": [
+            "IDM219",
+            "IDM225",
+            "IDM226",
+            "IDM227",
+            "IDM228",
+            "IEN107"
+          ]
+        },
+        "3": {
+          "1": [
+            "IDM310",
+            "IDM314",
+            "IDM321",
+            "IDM334",
+            "ICO301"
+          ],
+          "2": [
+            "IDM320",
+            "IDM323",
+            "IDM471"
+          ]
+        },
+        "4": {
+          "1": [
+            "IDM425"
+          ],
+          "2": [
+            "IDM426",
+            "IDM426"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2565",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "international tourism and hospitality management",
+      "deptName": "international tourism and hospitality management",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE101",
+            "IGE102",
+            "IGE103",
+            "IEN106",
+            "IEN108",
+            "THI101"
+          ],
+          "2": [
+            "IEN107",
+            "IGE104",
+            "IGE105",
+            "IGE106",
+            "IGE107",
+            "THI102"
+          ]
+        },
+        "2": {
+          "1": [
+            "THI201",
+            "THI202",
+            "THI203",
+            "THI204",
+            "THI205"
+          ],
+          "2": [
+            "THI206",
+            "THI211",
+            "THI311",
+            "THI312"
+          ]
+        },
+        "3": {
+          "1": [
+            "THI313",
+            "THI314"
+          ],
+          "2": [
+            "THI391",
+            "THI411",
+            "THI412",
+            "THI411",
+            "THI412"
+          ],
+          "3": [
+            "THI392"
+          ]
+        },
+        "4": {
+          "1": [
+            "THI413",
+            "THI414",
+            "THI415",
+            "THI415",
+            "ICO301"
+          ],
+          "2": [
+            "THI493",
+            "THI399"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2565",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "marketing",
+      "deptName": "marketing",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE101",
+            "IGE102",
+            "IEN107",
+            "IEN108",
+            "IEC203",
+            "IMG101"
+          ],
+          "2": [
+            "IAC102",
+            "IGE103",
+            "IGE104",
+            "IGE105",
+            "IMG112",
+            "IMK212"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE106",
+            "IGE107",
+            "IEN106",
+            "IFI212",
+            "ILA102",
+            "IMG211"
+          ],
+          "2": [
+            "IST202",
+            "IPM213",
+            "IMG212",
+            "IMK321",
+            "ICS202",
+            "ILA301",
+            "IMK321",
+            "ICS202"
+          ]
+        },
+        "3": {
+          "1": [
+            "IMK322",
+            "IMK329",
+            "IMK335",
+            "IMK427",
+            "IPM323",
+            "IMG311",
+            "IMG311"
+          ],
+          "2": [
+            "IMA104",
+            "IMK337",
+            "IMK421",
+            "IMK426",
+            "IMK429",
+            "IMK429"
+          ]
+        },
+        "4": {
+          "1": [
+            "IAC203",
+            "IMK423",
+            "ICO301",
+            "IMK423"
+          ],
+          "2": [
+            "IMK430"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2565",
+      "faculty": "bangkok-university-chinese-international-college",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติจีน",
+      "dept": "ภาษาจีนธุรกิจ",
+      "deptName": "ภาษาจีนธุรกิจ",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "CGE101",
+            "CBL161",
+            "CGE103",
+            "CEN101",
+            "CBL111",
+            "CBL121"
+          ],
+          "2": [
+            "CGE102",
+            "CGE106",
+            "CEN102",
+            "CBL131",
+            "CBL212",
+            "CBL222",
+            "CBL271"
+          ],
+          "3": [
+            "CBL161",
+            "CGE101"
+          ]
+        },
+        "2": {
+          "1": [
+            "CGE104",
+            "CGE107",
+            "CEN103",
+            "CBL223",
+            "CBL232",
+            "CBL241",
+            "CBL263",
+            "CEN101",
+            "CBL111",
+            "CBL121"
+          ],
+          "2": [
+            "CGE105",
+            "CBL213",
+            "CBL233",
+            "CBL242",
+            "CBL262",
+            "CBL271",
+            "CBL212",
+            "CBL222"
+          ],
+          "3": [
+            "CGE103",
+            "CGE104"
+          ]
+        },
+        "3": {
+          "1": [
+            "CBL314",
+            "CBL343",
+            "CBL364",
+            "CBL372",
+            "CBI380",
+            "CBI385",
+            "CEN103",
+            "CBL223",
+            "CBT380",
+            "CBT381"
+          ],
+          "2": [
+            "CBL315",
+            "CBL365",
+            "CBL373",
+            "CBI381",
+            "CBI382",
+            "CBI383",
+            "CBT382",
+            "CBT383",
+            "CBT384"
+          ]
+        },
+        "4": {
+          "1": [
+            "CBL451",
+            "CBI480",
+            "CBI481",
+            "CBI482",
+            "CBL364",
+            "CBT480",
+            "CBT481",
+            "CBT482"
+          ],
+          "2": [
+            "CBI483",
+            "CBI484",
+            "CBT483",
+            "CBT484"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2565",
       "faculty": "school-of-law",
       "group": "law",
       "facultyName": "คณะนิติศาสตร์",
@@ -44310,6 +45297,405 @@
     },
     {
       "acadyr": "2566",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business english",
+      "deptName": "business english",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IEN106",
+            "IEN107",
+            "IEN108",
+            "IGE101",
+            "IGE102",
+            "IGE103"
+          ],
+          "2": [
+            "IGE104",
+            "IGE105",
+            "IGE106",
+            "IGE107",
+            "IMG101",
+            "IEN202"
+          ]
+        },
+        "2": {
+          "1": [
+            "IBA101",
+            "IEN201",
+            "IEN217",
+            "IEN218"
+          ],
+          "2": [
+            "ICS202",
+            "IMG112",
+            "IMK212",
+            "IEN219",
+            "IEN220"
+          ]
+        },
+        "3": {
+          "1": [
+            "IEN222",
+            "IEN226",
+            "IEN227",
+            "IEN411"
+          ],
+          "2": [
+            "IEN302",
+            "IEN412",
+            "IEN413"
+          ]
+        },
+        "4": {
+          "1": [
+            "IEN421",
+            "ICO301"
+          ],
+          "2": [
+            "IEN430"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2566",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "communication strategy and ideation",
+      "deptName": "communication strategy and ideation",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "CAI104",
+            "IEN108",
+            "IGE103"
+          ],
+          "2": [
+            "IEN106",
+            "IEN107",
+            "IGE104",
+            "CAI105",
+            "CAI109"
+          ]
+        },
+        "2": {
+          "3": [
+            "IGE103"
+          ],
+          "1": [
+            "CAI102",
+            "CAI103",
+            "CAI104",
+            "CAI111",
+            "CSI201",
+            "CSI203"
+          ],
+          "2": [
+            "CAI107",
+            "CAI109"
+          ]
+        },
+        "3": {
+          "2": [
+            "IMI203"
+          ],
+          "1": [
+            "CAI111",
+            "IEN108"
+          ]
+        },
+        "4": {
+          "2": [
+            "CSI204",
+            "CSI404",
+            "CSI403"
+          ],
+          "1": [
+            "CAI112",
+            "CSI401"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2566",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "international tourism and hospitality management",
+      "deptName": "international tourism and hospitality management",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE101",
+            "IGE102",
+            "IGE103",
+            "IEN106",
+            "IEN108",
+            "THI101"
+          ],
+          "2": [
+            "IEN107",
+            "IGE104",
+            "IGE105",
+            "IGE106",
+            "IGE107",
+            "THI102"
+          ]
+        },
+        "2": {
+          "1": [
+            "THI201",
+            "THI202",
+            "THI203",
+            "THI204",
+            "THI205"
+          ],
+          "2": [
+            "THI206",
+            "THI211",
+            "THI311",
+            "THI312"
+          ]
+        },
+        "3": {
+          "1": [
+            "THI313",
+            "THI314"
+          ],
+          "2": [
+            "THI391",
+            "THI411",
+            "THI412",
+            "THI411",
+            "THI412"
+          ],
+          "3": [
+            "THI392"
+          ]
+        },
+        "4": {
+          "1": [
+            "THI413",
+            "THI414",
+            "THI415",
+            "THI415",
+            "ICO301"
+          ],
+          "2": [
+            "THI493",
+            "THI399"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2566",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "marketing",
+      "deptName": "marketing",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE101",
+            "IGE102",
+            "IEN107",
+            "IEN108",
+            "IEC203",
+            "IMG101"
+          ],
+          "2": [
+            "IAC102",
+            "IGE103",
+            "IGE104",
+            "IGE105",
+            "IEN106",
+            "ILA102"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE106",
+            "IGE107",
+            "IMK212",
+            "IFI212",
+            "IMG112",
+            "ICS202"
+          ],
+          "2": [
+            "IST202",
+            "IPM213",
+            "IMG212",
+            "IMK321",
+            "IMG211",
+            "ILA301"
+          ]
+        },
+        "3": {
+          "1": [
+            "IMK322",
+            "IMK329",
+            "IMK335",
+            "IMK427",
+            "IPM323",
+            "IMG311"
+          ],
+          "2": [
+            "IMA104",
+            "IMK337",
+            "IMK421",
+            "IMK426",
+            "IMK429",
+            "IMK423"
+          ]
+        },
+        "4": {
+          "1": [
+            "IAC203",
+            "ICO301"
+          ],
+          "2": [
+            "IMK423",
+            "IMK430"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2566",
+      "faculty": "bangkok-university-chinese-international-college",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติจีน",
+      "dept": "ภาษาจีนธุรกิจ",
+      "deptName": "ภาษาจีนธุรกิจ",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "CGE101",
+            "CBL161",
+            "CGE103",
+            "CEN101",
+            "CBL111",
+            "CBL121",
+            "CGE101",
+            "CGE101",
+            "CGE103"
+          ],
+          "2": [
+            "CGE102",
+            "CGE106",
+            "CEN102",
+            "CBL131",
+            "CBL212",
+            "CBL222",
+            "CBL271"
+          ],
+          "3": [
+            "CBL161",
+            "CGE101"
+          ]
+        },
+        "2": {
+          "1": [
+            "CGE104",
+            "CGE107",
+            "CEN103",
+            "CBL223",
+            "CBL232",
+            "CBL241",
+            "CBL263",
+            "CEN101",
+            "CBL111",
+            "CBL121"
+          ],
+          "2": [
+            "CGE105",
+            "CBL213",
+            "CBL233",
+            "CBL242",
+            "CBL262",
+            "CBL271",
+            "CBL212",
+            "CBL222"
+          ],
+          "3": [
+            "CGE103",
+            "CGE104"
+          ]
+        },
+        "3": {
+          "1": [
+            "CBL314",
+            "CBL343",
+            "CBL364",
+            "CBL372",
+            "CBI380",
+            "CBI385",
+            "CEN103",
+            "CBL223",
+            "CBT380",
+            "CBT381"
+          ],
+          "2": [
+            "CBL315",
+            "CBL365",
+            "CBL373",
+            "CBI381",
+            "CBI382",
+            "CBI383",
+            "CBT382",
+            "CBT383",
+            "CBT384"
+          ]
+        },
+        "4": {
+          "1": [
+            "CBL451",
+            "CBI480",
+            "CBI481",
+            "CBI482",
+            "CBL364",
+            "CBT480",
+            "CBT481",
+            "CBT482"
+          ],
+          "2": [
+            "CBI483",
+            "CBI484",
+            "CBT483",
+            "CBT484"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2566",
       "faculty": "school-of-law",
       "group": "law",
       "facultyName": "คณะนิติศาสตร์",
@@ -58192,6 +59578,847 @@
           ],
           "2": [
             "ENL421"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2567",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business administration — Data Science for Business",
+      "deptName": "business administration — Data Science for Business",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "3": [
+            "IGE012",
+            "IBA112",
+            "IBA113"
+          ],
+          "1": [
+            "IGE011",
+            "IGE014",
+            "IGE012",
+            "IEN106",
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ],
+          "2": [
+            "IGE013",
+            "IGE015",
+            "IEN107",
+            "IEN108",
+            "IBA115",
+            "IBA116",
+            "IBA117"
+          ]
+        },
+        "2": {
+          "3": [
+            "IBA114",
+            "IEN106"
+          ],
+          "1": [
+            "IBA210",
+            "IBA211",
+            "IBA212",
+            "IBA213",
+            "IBA214",
+            "IBA215",
+            "IBA221"
+          ],
+          "2": [
+            "IBA222",
+            "IBA223",
+            "IBA224",
+            "IBA225",
+            "IBA226",
+            "IBA227",
+            "IBA228"
+          ]
+        },
+        "3": {
+          "3": [
+            "IGE011",
+            "IBA369",
+            "IGE014",
+            "IGE012"
+          ],
+          "1": [
+            "IBA321",
+            "IBA322",
+            "IBA323",
+            "IBA324",
+            "IBA325",
+            "IBA360"
+          ],
+          "2": [
+            "IBA326",
+            "IBA327",
+            "IBA361",
+            "IBA362",
+            "IBA363",
+            "IBA364"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2567",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business administration — Digital Marketing",
+      "deptName": "business administration — Digital Marketing",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "3": [
+            "IGE012",
+            "IBA112",
+            "IBA113"
+          ],
+          "1": [
+            "IGE011",
+            "IGE014",
+            "IGE012",
+            "IEN106",
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ],
+          "2": [
+            "IGE013",
+            "IGE015",
+            "IEN107",
+            "IEN108",
+            "IBA115",
+            "IBA116",
+            "IBA117"
+          ]
+        },
+        "2": {
+          "3": [
+            "IBA114",
+            "IEN106"
+          ],
+          "1": [
+            "IBA210",
+            "IBA211",
+            "IBA212",
+            "IBA213",
+            "IBA214",
+            "IBA215",
+            "IBA221"
+          ],
+          "2": [
+            "IBA222",
+            "IBA223",
+            "IBA224",
+            "IBA225",
+            "IBA226",
+            "IBA227",
+            "IBA228"
+          ]
+        },
+        "3": {
+          "3": [
+            "IGE011",
+            "IBA349",
+            "IGE014"
+          ],
+          "1": [
+            "IBA321",
+            "IBA322",
+            "IBA323",
+            "IBA324",
+            "IBA325",
+            "IBA340"
+          ],
+          "2": [
+            "IBA326",
+            "IBA327",
+            "IBA341",
+            "IBA342",
+            "IBA343",
+            "IBA344"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2567",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business administration — Finance & Investment",
+      "deptName": "business administration — Finance & Investment",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "3": [
+            "IGE012",
+            "IBA112",
+            "IBA113"
+          ],
+          "1": [
+            "IGE011",
+            "IGE014",
+            "IGE012",
+            "IEN106",
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ],
+          "2": [
+            "IGE013",
+            "IGE015",
+            "IEN107",
+            "IEN108",
+            "IBA115",
+            "IBA116",
+            "IBA117"
+          ]
+        },
+        "2": {
+          "3": [
+            "IBA114",
+            "IEN106"
+          ],
+          "1": [
+            "IBA210",
+            "IBA211",
+            "IBA212",
+            "IBA213",
+            "IBA214",
+            "IBA215",
+            "IBA221"
+          ],
+          "2": [
+            "IBA222",
+            "IBA223",
+            "IBA224",
+            "IBA225",
+            "IBA226",
+            "IBA227",
+            "IBA228"
+          ]
+        },
+        "3": {
+          "3": [
+            "IGE011",
+            "IBA359",
+            "IGE014"
+          ],
+          "1": [
+            "IBA325",
+            "IBA350"
+          ],
+          "2": [
+            "IBA352",
+            "IBA353",
+            "IBA354"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2567",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business administration — International Business Management",
+      "deptName": "business administration — International Business Management",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE011",
+            "IGE014",
+            "IGE012",
+            "IEN106",
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ],
+          "2": [
+            "IGE013",
+            "IGE015",
+            "IEN107",
+            "IEN108",
+            "IBA115",
+            "IBA116",
+            "IBA117"
+          ],
+          "3": [
+            "IBA112",
+            "IBA113"
+          ]
+        },
+        "2": {
+          "3": [
+            "IBA114",
+            "IEN106"
+          ],
+          "1": [
+            "IBA210",
+            "IBA211",
+            "IBA212",
+            "IBA213",
+            "IBA214",
+            "IBA215",
+            "IBA221"
+          ],
+          "2": [
+            "IBA222",
+            "IBA223",
+            "IBA224",
+            "IBA225",
+            "IBA226",
+            "IBA227",
+            "IBA228"
+          ]
+        },
+        "3": {
+          "3": [
+            "IGE011",
+            "IBA379",
+            "IGE014"
+          ],
+          "1": [
+            "IBA321",
+            "IBA322",
+            "IBA323",
+            "IBA324",
+            "IBA325",
+            "IBA370"
+          ],
+          "2": [
+            "IBA326",
+            "IBA327",
+            "IBA371",
+            "IBA372",
+            "IBA373",
+            "IBA374"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2567",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business english",
+      "deptName": "business english",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IEN106",
+            "IEN107",
+            "IEN108",
+            "IGE011",
+            "IGE012",
+            "IGE013"
+          ],
+          "2": [
+            "IGE014",
+            "IGE015",
+            "IBE101",
+            "IBE102",
+            "IBE103"
+          ]
+        },
+        "2": {
+          "2": [
+            "IBE104",
+            "IBE205",
+            "IBE206",
+            "IBE207",
+            "IBE208",
+            "IBE213"
+          ],
+          "1": [
+            "IBE201",
+            "IBE202",
+            "IBE203",
+            "IBE204",
+            "IBE211",
+            "IBE212"
+          ]
+        },
+        "3": {
+          "2": [
+            "IBE214",
+            "IBE314",
+            "IBE315"
+          ],
+          "1": [
+            "IBE311",
+            "IBE312",
+            "IBE313"
+          ]
+        },
+        "4": {
+          "2": [
+            "IBE602"
+          ],
+          "1": [
+            "IBE411",
+            "IBE412",
+            "IBE413",
+            "ICO601"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2567",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "communication strategy and ideation",
+      "deptName": "communication strategy and ideation",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE101",
+            "IGE102",
+            "IGE103",
+            "IEN108",
+            "CAI101",
+            "CAI104"
+          ],
+          "2": [
+            "IGE104",
+            "IGE106",
+            "IEN107",
+            "IEN106",
+            "CAI105",
+            "CAI108",
+            "CAI109"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE105",
+            "IGE107",
+            "CAI102",
+            "CAI103",
+            "CAI111",
+            "CSI201",
+            "CSI203"
+          ],
+          "2": [
+            "CAI106",
+            "CAI107",
+            "CSI100",
+            "CSI200",
+            "CSI202"
+          ]
+        },
+        "3": {
+          "1": [
+            "CSI311",
+            "CSI312",
+            "CSI313",
+            "CSI314",
+            "CSI315",
+            "CSI316",
+            "CSI317"
+          ],
+          "2": [
+            "CSI321",
+            "CSI322",
+            "CSI323",
+            "CSI324",
+            "CSI325",
+            "CSI326",
+            "CSI327",
+            "CSI204"
+          ]
+        },
+        "4": {
+          "1": [
+            "CAI112",
+            "CSI400",
+            "CSI401",
+            "CSI402"
+          ],
+          "2": [
+            "CSI404",
+            "CSI403"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2567",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "creative communication design",
+      "deptName": "creative communication design",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IEN016",
+            "IGE011",
+            "IGE012",
+            "ICD151",
+            "ICD161",
+            "ICD162"
+          ],
+          "2": [
+            "IGE013",
+            "IGE014",
+            "IGE015",
+            "ICD152",
+            "ICD171",
+            "ICD172",
+            "IEN016"
+          ],
+          "3": [
+            "ICD151",
+            "ICD162",
+            "ICD161"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE011",
+            "IEN107",
+            "ICD253",
+            "ICD254",
+            "ICD263",
+            "ICD264",
+            "ICD273"
+          ],
+          "2": [
+            "IEN108",
+            "ICD255",
+            "ICD265",
+            "ICD275",
+            "ICD281",
+            "ICD358"
+          ]
+        },
+        "3": {
+          "1": [
+            "IGE012",
+            "ICD356",
+            "ICD357",
+            "ICD366",
+            "ICD376",
+            "ICD377",
+            "ICD382",
+            "ICO301"
+          ],
+          "2": [
+            "ICD358",
+            "ICD367",
+            "ICD368",
+            "ICD383",
+            "ICD388"
+          ],
+          "3": [
+            "ICD384"
+          ]
+        },
+        "4": {
+          "1": [
+            "IGE011",
+            "IGE012",
+            "ICD469",
+            "ICD478",
+            "ICD485",
+            "ICD486"
+          ],
+          "2": [
+            "ICD487",
+            "ICD367"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2567",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "international tourism and hospitality management",
+      "deptName": "international tourism and hospitality management",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE101",
+            "IGE102",
+            "IGE103",
+            "IEN106",
+            "IEN108",
+            "THI101"
+          ],
+          "2": [
+            "IEN107",
+            "IGE104",
+            "IGE105",
+            "IGE106",
+            "IGE107",
+            "THI102",
+            "THI101"
+          ]
+        },
+        "2": {
+          "1": [
+            "THI201",
+            "THI202",
+            "THI203",
+            "THI204",
+            "THI205",
+            "ICN271",
+            "IGE101",
+            "IEN106",
+            "IEN108"
+          ],
+          "2": [
+            "IGE103",
+            "THI206",
+            "THI211",
+            "THI311",
+            "THI312",
+            "THI351",
+            "ICN272"
+          ]
+        },
+        "3": {
+          "1": [
+            "IGE102",
+            "THI204",
+            "THI205",
+            "THI313",
+            "THI314",
+            "ICN373",
+            "THI483",
+            "THI332"
+          ],
+          "2": [
+            "THI391",
+            "THI411",
+            "THI412",
+            "ICN374",
+            "THI425",
+            "THI334",
+            "THI341"
+          ],
+          "3": [
+            "THI392"
+          ]
+        },
+        "4": {
+          "1": [
+            "THI413",
+            "THI414",
+            "THI415",
+            "ICN475",
+            "THI445",
+            "ICO301",
+            "THI483"
+          ],
+          "2": [
+            "THI493",
+            "THI399"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2567",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "marketing",
+      "deptName": "marketing",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE011",
+            "IGE014",
+            "IEN106",
+            "IMK150",
+            "IMK154"
+          ],
+          "2": [
+            "IGE012",
+            "IGE013",
+            "IEN108",
+            "IMK151",
+            "IMK152",
+            "IMK153"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE015",
+            "IEN107",
+            "IMK200",
+            "IMK250",
+            "IMK252",
+            "IMK257"
+          ],
+          "2": [
+            "IMK251",
+            "IMK254",
+            "IMK255",
+            "IMK256",
+            "IMK201",
+            "IMK350"
+          ]
+        },
+        "3": {
+          "1": [
+            "IMK253",
+            "IMK300",
+            "IMK351",
+            "IMK352",
+            "IMK354",
+            "ICO301"
+          ],
+          "2": [
+            "IMK353",
+            "IMK355",
+            "IMK302",
+            "IMK450",
+            "IMK452"
+          ]
+        },
+        "4": {
+          "1": [
+            "IMK356",
+            "IMK451"
+          ],
+          "2": [
+            "IMK450",
+            "IMK452",
+            "IMK430"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2567",
+      "faculty": "bangkok-university-chinese-international-college",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติจีน",
+      "dept": "ภาษาจีนธุรกิจ",
+      "deptName": "ภาษาจีนธุรกิจ",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "CGE011",
+            "CCF001",
+            "CCF002",
+            "CCL111",
+            "CCL121",
+            "CCL131",
+            "CCL141"
+          ],
+          "2": [
+            "CEN101",
+            "CGE013",
+            "CCL112",
+            "CCL122",
+            "CCL132",
+            "CCL142",
+            "CCF003"
+          ],
+          "3": [
+            "CGE011",
+            "CCF001",
+            "CCF002"
+          ]
+        },
+        "2": {
+          "1": [
+            "CEN102",
+            "CGE012",
+            "CGE014",
+            "CCL213",
+            "CCL223",
+            "CCL233",
+            "CCL251"
+          ],
+          "2": [
+            "CEN103",
+            "CGE015",
+            "CBC211",
+            "CBC221",
+            "CBC231",
+            "CBC241",
+            "CBC261"
+          ]
+        },
+        "3": {
+          "1": [
+            "CBC312",
+            "CBC322",
+            "CBC332",
+            "CBC342",
+            "CBC362",
+            "CBC363",
+            "CBC364"
+          ],
+          "2": [
+            "CCL352",
+            "CBC351",
+            "CBC352",
+            "CBC365",
+            "CBC366",
+            "CBC367"
+          ]
+        },
+        "4": {
+          "1": [
+            "CBC453",
+            "CBC468"
           ]
         }
       }
@@ -73287,6 +75514,882 @@
           ],
           "2": [
             "ENL421"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2568",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business administration — Data Science for Business",
+      "deptName": "business administration — Data Science for Business",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "4": {
+          "1": [
+            "IBA349",
+            "IBA369"
+          ]
+        },
+        "1": {
+          "1": [
+            "IGE011",
+            "IGE014",
+            "IGE012",
+            "IEN106",
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ],
+          "2": [
+            "IGE013",
+            "IGE015",
+            "IEN107",
+            "IEN108",
+            "IBA115",
+            "IBA116",
+            "IBA117"
+          ],
+          "3": [
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ]
+        },
+        "2": {
+          "1": [
+            "IBA210",
+            "IBA211",
+            "IBA212",
+            "IBA213",
+            "IBA214",
+            "IBA215",
+            "IBA221"
+          ],
+          "2": [
+            "IBA222",
+            "IBA223",
+            "IBA224",
+            "IBA225",
+            "IBA226",
+            "IBA227",
+            "IBA228"
+          ],
+          "3": [
+            "IEN106",
+            "IGE011"
+          ]
+        },
+        "3": {
+          "1": [
+            "IBA321",
+            "IBA322",
+            "IBA323",
+            "IBA324",
+            "IBA325",
+            "IBA360"
+          ],
+          "2": [
+            "IBA326",
+            "IBA327",
+            "IBA361",
+            "IBA362",
+            "IBA363",
+            "IBA364"
+          ],
+          "3": [
+            "IBA369",
+            "IGE014",
+            "IGE012"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2568",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business administration — Digital Marketing",
+      "deptName": "business administration — Digital Marketing",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "4": {
+          "1": [
+            "IBA359"
+          ]
+        },
+        "1": {
+          "1": [
+            "IGE011",
+            "IGE014",
+            "IGE012",
+            "IEN106",
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ],
+          "2": [
+            "IGE013",
+            "IGE015",
+            "IEN107",
+            "IEN108",
+            "IBA115",
+            "IBA116",
+            "IBA117"
+          ],
+          "3": [
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ]
+        },
+        "2": {
+          "1": [
+            "IBA210",
+            "IBA211",
+            "IBA212",
+            "IBA213",
+            "IBA214",
+            "IBA215",
+            "IBA221"
+          ],
+          "2": [
+            "IBA222",
+            "IBA223",
+            "IBA224",
+            "IBA225",
+            "IBA226",
+            "IBA227",
+            "IBA228"
+          ],
+          "3": [
+            "IEN106",
+            "IGE011"
+          ]
+        },
+        "3": {
+          "1": [
+            "IBA321",
+            "IBA322",
+            "IBA323",
+            "IBA324",
+            "IBA325",
+            "IBA340"
+          ],
+          "2": [
+            "IBA326",
+            "IBA327",
+            "IBA341",
+            "IBA342",
+            "IBA343",
+            "IBA344"
+          ],
+          "3": [
+            "IBA349",
+            "IGE014",
+            "IGE012"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2568",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business administration — Finance & Investment",
+      "deptName": "business administration — Finance & Investment",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "4": {
+          "1": [
+            "IBA379"
+          ]
+        },
+        "1": {
+          "1": [
+            "IGE011",
+            "IGE014",
+            "IGE012",
+            "IEN106",
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ],
+          "2": [
+            "IGE013",
+            "IGE015",
+            "IEN107",
+            "IEN108",
+            "IBA115",
+            "IBA116",
+            "IBA117"
+          ],
+          "3": [
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ]
+        },
+        "2": {
+          "1": [
+            "IBA210",
+            "IBA211",
+            "IBA212",
+            "IBA213",
+            "IBA214",
+            "IBA215",
+            "IBA221"
+          ],
+          "2": [
+            "IBA222",
+            "IBA223",
+            "IBA224",
+            "IBA225",
+            "IBA226",
+            "IBA227",
+            "IBA228"
+          ],
+          "3": [
+            "IEN106",
+            "IGE011"
+          ]
+        },
+        "3": {
+          "1": [
+            "IBA321",
+            "IBA322",
+            "IBA323",
+            "IBA324",
+            "IBA325",
+            "IBA350"
+          ],
+          "2": [
+            "IBA326",
+            "IBA327",
+            "IBA351",
+            "IBA352",
+            "IBA353",
+            "IBA354"
+          ],
+          "3": [
+            "IBA359",
+            "IGE014",
+            "IGE012"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2568",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business administration — International Business Management",
+      "deptName": "business administration — International Business Management",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE011",
+            "IGE014",
+            "IGE012",
+            "IEN106",
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ],
+          "2": [
+            "IGE013",
+            "IGE015",
+            "IEN107",
+            "IEN108",
+            "IBA115",
+            "IBA116",
+            "IBA117"
+          ],
+          "3": [
+            "IBA112",
+            "IBA113",
+            "IBA114"
+          ]
+        },
+        "2": {
+          "1": [
+            "IBA210",
+            "IBA211",
+            "IBA212",
+            "IBA213",
+            "IBA214",
+            "IBA215",
+            "IBA221"
+          ],
+          "2": [
+            "IBA222",
+            "IBA223",
+            "IBA224",
+            "IBA225",
+            "IBA226",
+            "IBA227",
+            "IBA228"
+          ],
+          "3": [
+            "IEN106",
+            "IGE011"
+          ]
+        },
+        "3": {
+          "1": [
+            "IBA321",
+            "IBA322",
+            "IBA323",
+            "IBA324",
+            "IBA325",
+            "IBA370"
+          ],
+          "2": [
+            "IBA326",
+            "IBA327",
+            "IBA371",
+            "IBA372",
+            "IBA373",
+            "IBA374"
+          ],
+          "3": [
+            "IBA379",
+            "IGE014",
+            "IGE012"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2568",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "business english",
+      "deptName": "business english",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IEN106",
+            "IEN107",
+            "IEN108",
+            "IGE011",
+            "IGE012",
+            "IGE013"
+          ],
+          "2": [
+            "IEN108",
+            "IGE014",
+            "IGE015",
+            "IBE101",
+            "IBE102",
+            "IBE103",
+            "IBE104"
+          ]
+        },
+        "2": {
+          "1": [
+            "IEN106",
+            "IBE201",
+            "IBE202",
+            "IBE203",
+            "IBE204",
+            "IBE211",
+            "IBE212"
+          ],
+          "2": [
+            "IBE205",
+            "IBE206",
+            "IBE207",
+            "IBE208",
+            "IBE213",
+            "IBE214",
+            "IEN107"
+          ]
+        },
+        "3": {
+          "1": [
+            "IBE311",
+            "IBE312",
+            "IBE313",
+            "IGE011",
+            "IGE012",
+            "IGE013"
+          ],
+          "2": [
+            "IBE314",
+            "IBE315"
+          ]
+        },
+        "4": {
+          "1": [
+            "IBE411",
+            "IBE412",
+            "IBE413",
+            "ICO601"
+          ],
+          "2": [
+            "IBE602"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2568",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "creative communication design",
+      "deptName": "creative communication design",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IEN106",
+            "IGE011",
+            "IGE012",
+            "ICD151",
+            "ICD161",
+            "ICD162"
+          ],
+          "2": [
+            "IGE013",
+            "IGE014",
+            "IGE015",
+            "ICD152",
+            "ICD171",
+            "ICD172",
+            "IEN106"
+          ],
+          "3": [
+            "ICD151",
+            "ICD162",
+            "ICD161"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE011",
+            "IEN107",
+            "ICD253",
+            "ICD254",
+            "ICD263",
+            "ICD264",
+            "ICD273"
+          ],
+          "2": [
+            "IEN108",
+            "ICD255",
+            "ICD265",
+            "ICD275",
+            "ICD281",
+            "ICD358"
+          ]
+        },
+        "3": {
+          "1": [
+            "IGE012",
+            "ICD356",
+            "ICD357",
+            "ICD366",
+            "ICD376",
+            "ICD377",
+            "ICD382",
+            "ICO301"
+          ],
+          "2": [
+            "ICD358",
+            "ICD367",
+            "ICD368",
+            "ICD383",
+            "ICD388"
+          ],
+          "3": [
+            "ICD384"
+          ]
+        },
+        "4": {
+          "1": [
+            "IGE011",
+            "IGE012",
+            "ICD469",
+            "ICD478",
+            "ICD485",
+            "ICD486"
+          ],
+          "2": [
+            "ICD487",
+            "ICD367"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2568",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "international tourism and hospitality management",
+      "deptName": "international tourism and hospitality management",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IEN106",
+            "IEN108",
+            "IGE011",
+            "IGE012",
+            "THI101",
+            "THI201"
+          ],
+          "2": [
+            "IEN107",
+            "IGE013",
+            "IGE014",
+            "THI102",
+            "THI311",
+            "THI101",
+            "THI312"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE015",
+            "THI203",
+            "THI204",
+            "THI207",
+            "THI212",
+            "ICN271",
+            "IEN108"
+          ],
+          "2": [
+            "THI205",
+            "THI211",
+            "THI206",
+            "THI332",
+            "THI336",
+            "IEN107"
+          ]
+        },
+        "3": {
+          "1": [
+            "THI314",
+            "THI411",
+            "THI313",
+            "ICN373",
+            "THI481",
+            "IGE011",
+            "THI201"
+          ],
+          "2": [
+            "THI413",
+            "THI213",
+            "THI429",
+            "THI351",
+            "ICN374",
+            "IGE012"
+          ],
+          "3": [
+            "THI392"
+          ]
+        },
+        "4": {
+          "1": [
+            "THI391",
+            "THI414",
+            "THI341",
+            "ICN475",
+            "THI483",
+            "ICO301"
+          ],
+          "2": [
+            "THI493",
+            "THI399"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2568",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "marketing",
+      "deptName": "marketing",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IGE011",
+            "IGE014",
+            "IEN106",
+            "IMK150",
+            "IMK154"
+          ],
+          "2": [
+            "IGE012",
+            "IGE013",
+            "IEN108",
+            "IMK151",
+            "IMK152",
+            "IMK153",
+            "IMK150"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE015",
+            "IEN107",
+            "IMK200",
+            "IMK250",
+            "IMK252",
+            "IMK257",
+            "IGE011",
+            "IGE014"
+          ],
+          "2": [
+            "IMK251",
+            "IMK254",
+            "IMK255",
+            "IMK256",
+            "IMK201",
+            "IMK350",
+            "IEN106"
+          ]
+        },
+        "3": {
+          "1": [
+            "IMK253",
+            "IMK300",
+            "IMK351",
+            "IMK352",
+            "IMK354",
+            "IMK401",
+            "ICO301",
+            "IMK154"
+          ],
+          "2": [
+            "IMK353",
+            "IMK355",
+            "IMK302",
+            "IMK403",
+            "IMK467",
+            "IMK450",
+            "IMK452",
+            "IMK401"
+          ]
+        },
+        "4": {
+          "1": [
+            "IMK356",
+            "IMK451",
+            "IMK467",
+            "IMK473",
+            "IMK474",
+            "IMK252"
+          ],
+          "2": [
+            "IMK450",
+            "IMK452",
+            "IMK476",
+            "IMK430"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2568",
+      "faculty": "bangkok-university-international",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติ",
+      "dept": "media and communication",
+      "deptName": "media and communication",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "IEN106",
+            "IGE011",
+            "IGE012",
+            "CAI101",
+            "CAI104"
+          ],
+          "2": [
+            "IEN107",
+            "IGE014",
+            "IGE015",
+            "CAI105",
+            "CAI108",
+            "CAI109",
+            "CAI101"
+          ],
+          "3": [
+            "IEN106",
+            "IGE011",
+            "IGE012"
+          ]
+        },
+        "2": {
+          "1": [
+            "IGE013",
+            "CAI102",
+            "CAI103",
+            "CAI111",
+            "IMC211",
+            "IMC212",
+            "IMC213"
+          ],
+          "2": [
+            "IEN108",
+            "CAI106",
+            "IMC221",
+            "IMC222",
+            "IMC223",
+            "IMC224",
+            "CAI104"
+          ]
+        },
+        "3": {
+          "1": [
+            "CAI112",
+            "IMC311",
+            "IMC312",
+            "IMC313"
+          ],
+          "2": [
+            "IMC321",
+            "IMC322",
+            "IMC323"
+          ]
+        },
+        "4": {
+          "1": [
+            "IMC411",
+            "IMC412",
+            "IMC413",
+            "IMC414"
+          ],
+          "2": [
+            "IMC421",
+            "IMC422"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2568",
+      "faculty": "bangkok-university-chinese-international-college",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติจีน",
+      "dept": "ภาษาจีนธุรกิจ",
+      "deptName": "ภาษาจีนธุรกิจ",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "CGE011",
+            "CCF001",
+            "CCF002",
+            "CCL111",
+            "CCL121",
+            "CCL131",
+            "CCL141"
+          ],
+          "2": [
+            "CEN101",
+            "CGE013",
+            "CCL112",
+            "CCL122",
+            "CCL132",
+            "CCL142",
+            "CCF003"
+          ],
+          "3": [
+            "CGE011",
+            "CCF001",
+            "CCF002"
+          ]
+        },
+        "2": {
+          "1": [
+            "CEN102",
+            "CGE012",
+            "CGE014",
+            "CCL213",
+            "CCL223",
+            "CCL233",
+            "CCL251"
+          ],
+          "2": [
+            "CEN103",
+            "CGE015",
+            "CBC211",
+            "CBC221",
+            "CBC231",
+            "CBC241",
+            "CBC261"
+          ]
+        },
+        "3": {
+          "1": [
+            "CBC312",
+            "CBC322",
+            "CBC332",
+            "CBC342",
+            "CBC362",
+            "CBC363",
+            "CBC364"
+          ],
+          "2": [
+            "CCL352",
+            "CBC351",
+            "CBC352",
+            "CBC365",
+            "CBC366",
+            "CBC367"
+          ]
+        },
+        "4": {
+          "1": [
+            "CBC453",
+            "CBC468"
           ]
         }
       }
@@ -88755,6 +91858,163 @@
           ],
           "2": [
             "ENL421"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2569",
+      "faculty": "bangkok-university-chinese-international-college",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติจีน",
+      "dept": "ภาษาจีนธุรกิจ",
+      "deptName": "ภาษาจีนธุรกิจ",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "CGE011",
+            "CCF001",
+            "CCF002",
+            "CCL111",
+            "CCL121",
+            "CCL131",
+            "CCL141"
+          ],
+          "2": [
+            "CEN101",
+            "CGE013",
+            "CGE014",
+            "CCL113",
+            "CCL123",
+            "CCL133",
+            "CCL143"
+          ],
+          "3": [
+            "CGE011",
+            "CCF001",
+            "CCF002"
+          ]
+        },
+        "2": {
+          "1": [
+            "CEN102",
+            "CGE012",
+            "CCL214",
+            "CCL224",
+            "CCL234",
+            "CCL244",
+            "CCL251"
+          ],
+          "2": [
+            "CEN103",
+            "CGE015",
+            "CCL215",
+            "CBC211",
+            "CBC221",
+            "CBC231",
+            "CBC241"
+          ]
+        },
+        "3": {
+          "1": [
+            "CCL316",
+            "CBC312",
+            "CBC322",
+            "CBC332",
+            "CBC342",
+            "CBC362",
+            "CBC365"
+          ],
+          "2": [
+            "CBC368",
+            "CBC369",
+            "CBC370",
+            "CBC371",
+            "CBC372",
+            "CCF004",
+            "CCE301"
+          ]
+        },
+        "4": {
+          "1": [
+            "CBC473",
+            "CBC474",
+            "CCE402"
+          ]
+        }
+      }
+    },
+    {
+      "acadyr": "2569",
+      "faculty": "bangkok-university-chinese-international-college",
+      "group": "international",
+      "facultyName": "วิทยาลัยนานาชาติจีน",
+      "dept": "สองภาษา",
+      "deptName": "สองภาษา",
+      "track": "default",
+      "trackName": "default",
+      "plan": "ปกติ",
+      "cohort": "รุ่น 1/1",
+      "years": {
+        "1": {
+          "1": [
+            "CGE011",
+            "CGE012",
+            "CGE013",
+            "CEN101",
+            "CBA111",
+            "CBA112"
+          ],
+          "2": [
+            "CGE014",
+            "CGE015",
+            "CEN102",
+            "CBA011",
+            "CBA113",
+            "CBA114"
+          ]
+        },
+        "2": {
+          "1": [
+            "CEN103",
+            "CBA211",
+            "CBA212",
+            "CBA221",
+            "CBA222",
+            "CBA223"
+          ],
+          "2": [
+            "CBA012",
+            "CBA013",
+            "CBA213",
+            "CBA214",
+            "CBA215",
+            "CBA216",
+            "CBA224"
+          ]
+        },
+        "3": {
+          "1": [
+            "CBA311",
+            "CBA312",
+            "CBA325",
+            "CBA326",
+            "CBA327"
+          ],
+          "2": [
+            "CBA014",
+            "CBA328",
+            "CBA329",
+            "CEP392"
+          ]
+        },
+        "4": {
+          "1": [
+            "CEP393"
           ]
         }
       }

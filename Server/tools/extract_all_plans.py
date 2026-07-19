@@ -50,6 +50,8 @@ FACULTY_GROUP = {
     "school-of-law": "law",
     "school-of-humanities-and-tourism-management": "hospitality",
     "school-of-fine-and-applied-arts": "liberal_arts",
+    "bangkok-university-international": "international",
+    "bangkok-university-chinese-international-college": "international",
 }
 
 
