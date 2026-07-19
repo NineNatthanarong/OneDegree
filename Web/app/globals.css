@@ -19,8 +19,8 @@
 
 :root {
   /* --- surfaces (BU base scale) --- */
-  --paper:      #F8F8F8;   /* app + canvas background */
-  --paper-2:    #EFF0F1;
+  --paper:      #FAF7FC;   /* warm, paper-like app + canvas background */
+  --paper-2:    #F2EDF5;
   --paper-3:    #FFFFFF;   /* station / card surfaces */
   --ink:        #1D1E20;
   --ink-soft:   #5A5E63;
@@ -40,11 +40,14 @@
   /* --- Bangkok University brand duotone --- */
   --bu:          #3F194B;  /* primary purple (spine, brand, active) */
   --bu-2:        #5D3669;  /* purple hover / deeper */
+  --bu-deep:     #291033;  /* strong route / high-emphasis purple */
+  --bu-interactive: #6D3FA0; /* playful interactive purple */
   --bu-tint:     #F1ECF4;  /* lavender wash */
   --bu-tint-2:   #E4D9EA;
 
   --accent:      #E56436;  /* BU orange — energy / CTA */
   --accent-2:    #D2552B;  /* orange deeper */
+  --accent-bright:#FF7A3D;  /* current journey / energetic highlight */
   --accent-soft: #EA835E;
   --accent-tint: #FDEDE5;  /* orange wash */
 
@@ -77,16 +80,9 @@ html, body {
   height: 100vh;
 }
 
-/* faint duotone glow behind the map */
+/* Keep the canvas paper-like; the route itself provides the visual energy. */
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(110% 70% at 50% -10%, rgba(63,25,75,0.06), transparent 60%),
-    radial-gradient(80% 60% at 100% 110%, rgba(229,100,54,0.05), transparent 60%);
+  content: none;
 }
 
 a { color: var(--bu); text-decoration-color: var(--accent); text-underline-offset: 3px; }
@@ -114,9 +110,9 @@ button { font-family: inherit; }
   align-items: center;
   gap: 24px;
   padding: 14px 24px;
-  background: rgba(255,255,255,0.82);
+  background: var(--paper-3);
   border-bottom: 1px solid var(--hairline);
-  backdrop-filter: saturate(1.4) blur(10px);
+  box-shadow: 0 5px 18px -18px rgba(41,16,51,0.42);
 }
 
 .brand { display: flex; align-items: center; gap: 12px; }
@@ -331,10 +327,7 @@ button { font-family: inherit; }
   display: grid;
   place-items: center;
   padding: 32px 20px;
-  background:
-    radial-gradient(120% 80% at 50% -10%, rgba(63,25,75,0.06), transparent 60%),
-    radial-gradient(80% 60% at 100% 110%, rgba(229,100,54,0.05), transparent 60%),
-    var(--paper);
+  background: var(--paper);
 }
 .picker-overlay {
   position: fixed;
@@ -344,7 +337,6 @@ button { font-family: inherit; }
   place-items: center;
   padding: 20px;
   background: rgba(29,30,32,0.46);
-  backdrop-filter: blur(3px);
   animation: overlay-in 180ms ease;
 }
 @keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
@@ -652,7 +644,7 @@ button { font-family: inherit; }
   gap: 30px;
   padding: 116px 90px 90px;
   align-items: stretch;
-  animation: map-fade 520ms var(--ease) both;   /* re-reveals on plan change (keyed) */
+  animation: map-fade 640ms var(--ease) both;   /* re-reveals on plan change (keyed) */
 }
 @keyframes map-fade { from { opacity: 0; } to { opacity: 1; } }
 
@@ -661,7 +653,8 @@ button { font-family: inherit; }
   content: "";
   position: absolute;
   left: 0; right: 0;
-  top: 62px;
+  /* Align with the centre of the 24px station marker: 116 - 55 + 12. */
+  top: 73px;
   height: 4px;
   border-radius: 4px;
   background:
@@ -687,14 +680,21 @@ button { font-family: inherit; }
   flex: 0 0 286px;
   background: var(--paper-3);
   border: 1px solid var(--hairline);
-  border-radius: var(--r-station);
+  border-radius: 14px;
   padding: 16px 15px;
   display: flex;
   flex-direction: column;
-  transition: border-color 200ms ease, box-shadow 240ms var(--spring);
-  box-shadow: 0 10px 26px -20px rgba(29,30,32,0.5);
+  transition: border-color 180ms ease, box-shadow 220ms var(--ease), background 180ms ease;
+  box-shadow: 0 14px 28px -24px rgba(41,16,51,0.56);
+  animation: station-arrive 520ms var(--ease) both;
 }
-.semester:hover { box-shadow: 0 16px 34px -22px rgba(63,25,75,0.5); }
+.semester:nth-of-type(3n + 1) { animation-delay: 70ms; }
+.semester:nth-of-type(3n + 2) { animation-delay: 140ms; }
+.semester:hover { border-color: var(--bu-interactive); box-shadow: 0 18px 34px -23px rgba(41,16,51,0.62); }
+@keyframes station-arrive {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 /* station marker — interchange ring breathing on the line */
 .semester::before {
   content: "";
@@ -702,11 +702,11 @@ button { font-family: inherit; }
   top: -55px;
   left: 50%;
   transform: translateX(-50%) scale(1);
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #fff;
-  border: 4px solid var(--bu);
+  border: 5px solid var(--bu);
   z-index: 2;
   box-shadow: 0 2px 8px -2px rgba(63,25,75,0.55);
   animation: station-breathe 3.4s ease-in-out infinite;
@@ -739,15 +739,24 @@ button { font-family: inherit; }
 }
 
 .sem-header {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   padding-bottom: 11px;
   margin-bottom: 12px;
   border-bottom: 1px solid var(--hairline);
+  background: transparent;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  font-family: var(--font-thai);
+  text-align: left;
 }
-.sem-title { font-weight: 700; font-size: 14px; color: var(--ink); }
+.sem-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px; font-weight: 700; font-size: 14px; color: var(--ink); }
 .sem-title small { font-weight: 500; color: var(--bu); font-size: 11.5px; margin-left: 6px; }
+.sem-count { width: 100%; margin-top: 3px; color: var(--ink-faint); font-size: 10.5px; font-weight: 500; }
+.sem-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex: 0 0 auto; }
 .sem-credits {
   font-family: var(--font-mono);
   font-size: 10.5px;
@@ -780,26 +789,40 @@ button { font-family: inherit; }
   padding: 9px 11px 9px 13px;
   border: 1px solid var(--hairline);
   border-left: 3px solid var(--blue);
-  border-radius: var(--r-stop);
+  border-radius: 8px;
   background: #fff;
   margin-bottom: 8px;
   cursor: grab;
   transition:
-    transform 200ms var(--spring),
     box-shadow 180ms ease,
     border-color 180ms ease,
     background 180ms ease,
     opacity 220ms ease;
 }
 .course:last-child { margin-bottom: 0; }
-.course:hover {
-  box-shadow: 0 10px 22px -10px rgba(63,25,75,0.4);
-  border-color: var(--blue-soft);
-  transform: translateX(3px) scale(1.015);
+/* Controlled by React instead of native :hover. Native :hover can stick to a
+   draggable DOM node when React re-parents it into another semester. */
+.course.hovered {
+  box-shadow: 0 12px 22px -14px rgba(41,16,51,0.55);
+  border-color: var(--bu-interactive);
   z-index: 2;
 }
 .course:active { cursor: grabbing; }
-.course.dragging { opacity: 0.4; transform: rotate(-1.5deg) scale(1.03); }
+.course.dragging {
+  /* Fixed-size origin placeholder while the separate drag image follows the cursor. */
+  opacity: 0.34;
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.course.course-drag-image {
+  opacity: 1;
+  border-color: var(--accent);
+  border-left-color: var(--accent-bright);
+  background: var(--paper-3);
+  box-shadow: 0 14px 30px -12px rgba(41,16,51,0.58),
+              0 0 0 3px var(--accent-tint);
+}
 
 .course-code {
   font-family: var(--font-mono);
@@ -820,19 +843,6 @@ button { font-family: inherit; }
   margin-top: 3px;
   font-weight: 500;
 }
-.course-pre {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  color: var(--ink-faint);
-  margin-top: 5px;
-  letter-spacing: 0.04em;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 220ms var(--ease), opacity 200ms ease, margin-top 200ms ease;
-}
-.course:hover .course-pre { max-height: 40px; opacity: 1; }
-
 /* withdrawn — broken service (RED). NO transform (arc-safe): flash via shadow. */
 .course.withdrawn {
   background: repeating-linear-gradient(
@@ -1127,7 +1137,8 @@ button { font-family: inherit; }
   .pop-item { padding: 11px 12px; font-size: 14px; }
 
   .row { gap: 22px; padding: 98px 36px 48px; }
-  .row::before { top: 54px; }
+  /* Align with the mobile marker centre: 98 - 48 + 12. */
+  .row::before { top: 62px; }
   .semester { width: 248px; flex: 0 0 248px; padding: 13px; }
   .semester::before { top: -48px; }
   .semester::after { top: -32px; height: 32px; }
@@ -1172,7 +1183,7 @@ button { font-family: inherit; }
    REDUCED MOTION — kill all looping / spring motion
    ========================================================= */
 @media (prefers-reduced-motion: reduce) {
-  .row, .row::before, .semester::before, .arc, .arc.draw-in, .arc.concurrent,
+  .row, .row::before, .semester, .semester::before, .arc, .arc.draw-in, .arc.concurrent,
   .arc.affected, .course, .course.affected, .course.withdrawn, .chip.active,
   .welcome-inner, .tip, .popover, .picker-card, .picker-overlay {
     animation: none !important;
@@ -1191,25 +1202,48 @@ button { font-family: inherit; }
    ========================================================= */
 .mode-switch {
   display: inline-flex;
-  gap: 4px;
-  background: var(--paper-2);
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-pill);
-  padding: 3px;
+  align-self: stretch;
+  gap: 0;
+  border-left: 1px solid var(--hairline);
+  margin-left: 4px;
+  padding-left: 8px;
 }
 .mode-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-thai);
   font-size: 12px;
   font-weight: 600;
   color: var(--ink-soft);
   text-decoration: none;
-  padding: 5px 13px;
-  border-radius: var(--r-pill);
+  padding: 9px 11px 10px;
   white-space: nowrap;
-  transition: background 140ms ease, color 140ms ease;
+  transition: color 140ms ease;
 }
-.mode-pill:hover { color: var(--bu); }
-.mode-pill.active { background: var(--bu); color: #fff; }
+.mode-pill::after {
+  content: "";
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  bottom: 3px;
+  height: 2px;
+  background: transparent;
+  transform: scaleX(0.35);
+  transition: background 140ms ease, transform 180ms var(--ease);
+}
+.mode-pill:hover { color: var(--bu-deep); }
+.mode-pill.active { color: var(--bu); }
+.mode-pill.active::after { background: var(--accent); transform: scaleX(1); }
+.mode-pill.active::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-tint);
+}
 
 /* =========================================================
    TIMETABLE PLANNER
@@ -1629,7 +1663,7 @@ button { font-family: inherit; }
 /* section chooser card (many / overlapping sections) */
 .tt-chooser-overlay {
   position: fixed; inset: 0; z-index: 130; display: grid; place-items: center; padding: 20px;
-  background: rgba(29,30,32,0.46); backdrop-filter: blur(3px); animation: overlay-in 160ms ease;
+  background: rgba(29,30,32,0.46); animation: overlay-in 160ms ease;
 }
 .tt-chooser-card {
   position: relative; width: 100%; max-width: 520px; max-height: 82vh; overflow: auto;

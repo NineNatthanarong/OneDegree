@@ -64,13 +64,15 @@ export default function Canvas({
     origY: 0
   });
   const [isPanning, setIsPanning] = useState(false);
-
   // arcs
   const [arcPaths, setArcPaths] = useState<ArcPath[]>([]);
   const [canvasSize, setCanvasSize] = useState({ w: 0, h: 0 });
 
   // drag-drop
   const [dragging, setDragging] = useState<CourseNode | null>(null);
+  // Native drag events can arrive before React has committed setDragging().
+  // Keep the source in a ref too, so a station always accepts the first drop.
+  const draggingRef = useRef<CourseNode | null>(null);
   const [dropHint, setDropHint] = useState<{
     yearIdx: number;
     semIdx: number;
@@ -85,6 +87,10 @@ export default function Canvas({
   // We also stamp the last touch time so the synthetic mouse events a tap fires
   // afterwards don't re-open the tip we just closed.
   const touchedAtRef = useRef(0);
+  // Browsers can emit a synthetic mouse-enter when a dragged course is
+  // re-parented into its destination station. Ignore it so focus does not
+  // reappear at the source after a successful drop.
+  const suppressCourseHoverUntilRef = useRef(0);
   const lpTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lpPosRef = useRef({ x: 0, y: 0 });
   const previewedRef = useRef(false); // a hold-preview fired → swallow the tap
@@ -243,12 +249,14 @@ export default function Canvas({
     setArcPaths(newPaths);
   }
 
-  // recompute when grid (positions) or edges or impact set change
+  // Recompute when layout/state changes. `dragging` is included because the
+  // native drag lifecycle can otherwise leave SVG routes measured at the
+  // source station after the course has settled in its destination.
   useLayoutEffect(() => {
     const id = requestAnimationFrame(recomputeArcs);
     return () => cancelAnimationFrame(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [grid, edges, withdrawn, affected, violations]);
+  }, [grid, edges, withdrawn, affected, violations, dragging]);
 
   // also recompute on zoom change (since DOMRects reflect scaled values)
   useLayoutEffect(() => {
@@ -528,6 +536,17 @@ export default function Canvas({
 
     if (desc.size)
       lines.push(`เป็นวิชาก่อนของ ${desc.size} วิชาด้านหลัง`);
+    const directUnlocks = courses.filter((candidate) =>
+      adjacency.out.get(c.id)?.includes(candidate.id)
+    );
+    if (directUnlocks.length) {
+      lines.push(
+        `✦ ปลดล็อก ${directUnlocks
+          .slice(0, 3)
+          .map((course) => `<code>${escapeHtml(course.code)}</code>`)
+          .join(" · ")}${directUnlocks.length > 3 ? ` +${directUnlocks.length - 3}` : ""}`
+      );
+    }
     if (isWithdrawn) lines.push(`<span class="impact">ถอนแล้ว</span>`);
     if (isAffected)
       lines.push(
@@ -546,6 +565,37 @@ export default function Canvas({
   }
   function hideTip() {
     setTip(null);
+  }
+  function clearCoursePreview() {
+    hideTip();
+    leaveFocus();
+  }
+  function clearAfterDrag() {
+    clearCoursePreview();
+    suppressCourseHoverUntilRef.current = Date.now() + 600;
+    requestAnimationFrame(clearCoursePreview);
+  }
+  function setCourseDragImage(e: React.DragEvent<HTMLDivElement>) {
+    // Use a detached visual clone for the native drag ghost. Styling the real
+    // measured card would move its SVG anchors; the clone can look lifted
+    // without changing map geometry.
+    const source = e.currentTarget;
+    const rect = source.getBoundingClientRect();
+    const preview = source.cloneNode(true) as HTMLDivElement;
+    preview.className = "course course-drag-image";
+    preview.style.width = `${rect.width}px`;
+    preview.style.position = "fixed";
+    preview.style.left = "-10000px";
+    preview.style.top = "-10000px";
+    preview.style.margin = "0";
+    preview.style.pointerEvents = "none";
+    document.body.appendChild(preview);
+    e.dataTransfer.setDragImage(
+      preview,
+      Math.min(28, rect.width / 2),
+      Math.min(20, rect.height / 2)
+    );
+    requestAnimationFrame(() => preview.remove());
   }
 
   /* -------- render -------- */
@@ -687,12 +737,13 @@ export default function Canvas({
                 <div
                   className={cls}
                   onDragOver={(e) => {
-                    if (!dragging) return;
+                    const source = draggingRef.current;
+                    if (!source) return;
                     e.preventDefault();
                     setDropHint({
                       yearIdx: entry.yi,
                       semIdx: entry.si,
-                      violates: wouldViolate(dragging, entry.yi, entry.si)
+                      violates: wouldViolate(source, entry.yi, entry.si)
                     });
                   }}
                   onDragLeave={() => {
@@ -706,17 +757,26 @@ export default function Canvas({
                   }}
                   onDrop={(e) => {
                     e.preventDefault();
-                    const id = e.dataTransfer.getData("text/plain");
+                    const id =
+                      e.dataTransfer.getData("application/x-onedegree-course") ||
+                      e.dataTransfer.getData("text/plain") ||
+                      draggingRef.current?.id;
                     if (id) onMoveCourse(id, entry.yi, entry.si);
+                    draggingRef.current = null;
+                    setDragging(null);
                     setDropHint(null);
+                    clearAfterDrag();
                   }}
                 >
                   <div className="sem-header">
-                    <div className="sem-title">
+                    <span className="sem-title">
                       ปี {entry.year}{" "}
                       <small>· เทอม {entry.sem.semester}</small>
-                    </div>
-                    <div className="sem-credits">{credits} นก.</div>
+                      <span className="sem-count">{list.length} วิชา</span>
+                    </span>
+                    <span className="sem-header-right">
+                      <span className="sem-credits">{credits} นก.</span>
+                    </span>
                   </div>
                   <div className="course-list">
                     {list.map((c) => {
@@ -733,6 +793,8 @@ export default function Canvas({
                       }
                       const courseCls = [
                         "course",
+                        focus?.id === c.id ? "hovered" : "",
+                        dragging?.id === c.id ? "dragging" : "",
                         isWithdrawn ? "withdrawn" : "",
                         isAffected ? "affected" : "",
                         isViolation ? "violation" : "",
@@ -745,15 +807,24 @@ export default function Canvas({
                           key={c.id}
                           className={courseCls}
                           data-course-id={c.id}
-                          draggable
+                          draggable={true}
                           onDragStart={(e) => {
+                            clearAfterDrag();
+                            setCourseDragImage(e);
+                            draggingRef.current = c;
                             setDragging(c);
+                            e.dataTransfer.setData(
+                              "application/x-onedegree-course",
+                              c.id
+                            );
                             e.dataTransfer.setData("text/plain", c.id);
                             e.dataTransfer.effectAllowed = "move";
                           }}
                           onDragEnd={() => {
+                            draggingRef.current = null;
                             setDragging(null);
                             setDropHint(null);
+                            clearAfterDrag();
                           }}
                           onClick={(e) => {
                             if (e.detail === 0) return;
@@ -768,12 +839,18 @@ export default function Canvas({
                             onToggleWithdrawn(c.id);
                           }}
                           onMouseEnter={(e) => {
-                            if (fromTouch()) return; // ignore synthetic mouse-after-touch
+                            if (
+                              fromTouch() ||
+                              Date.now() < suppressCourseHoverUntilRef.current
+                            ) return;
                             showTip(c, e);
                             enterFocus(c);
                           }}
                           onMouseMove={(e) => {
-                            if (fromTouch()) return;
+                            if (
+                              fromTouch() ||
+                              Date.now() < suppressCourseHoverUntilRef.current
+                            ) return;
                             moveTip(e);
                           }}
                           onMouseLeave={() => {
@@ -833,11 +910,6 @@ export default function Canvas({
                             </span>
                           </div>
                           <div className="course-name">{c.name}</div>
-                          {c.preCodes.length > 0 && (
-                            <div className="course-pre">
-                              ↺ ต้องผ่าน {c.preCodes.join(", ")}
-                            </div>
-                          )}
                         </div>
                       );
                     })}

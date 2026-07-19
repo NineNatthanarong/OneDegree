@@ -33,6 +33,47 @@ const EMPTY_OPTIONS: DegreePlanOptions = {
 
 type NextField = keyof DegreePlanQuery | "done";
 
+function getOnlyOption(
+  field: keyof DegreePlanQuery,
+  options: DegreePlanOptions
+): { value: string; label: string } | null {
+  switch (field) {
+    case "academic_year": {
+      const option = options.academic_years[0];
+      return options.academic_years.length === 1
+        ? { value: option.year, label: `ปีการศึกษา ${option.year}` }
+        : null;
+    }
+    case "faculty_slug": {
+      const option = options.faculties[0];
+      return options.faculties.length === 1
+        ? { value: option.slug, label: option.name_th }
+        : null;
+    }
+    case "department_slug": {
+      const option = options.departments[0];
+      return options.departments.length === 1
+        ? { value: option.slug, label: option.name_th }
+        : null;
+    }
+    case "track_slug": {
+      const option = options.tracks[0];
+      return options.tracks.length === 1
+        ? {
+            value: option.slug,
+            label: option.slug === "default" ? "หลักสูตรปกติ" : option.name
+          }
+        : null;
+    }
+    case "plan_slug": {
+      const option = options.plans[0];
+      return options.plans.length === 1
+        ? { value: option.slug, label: option.name }
+        : null;
+    }
+  }
+}
+
 export default function Page() {
   const [selected, setSelected] = useState<DegreePlanQuery>(EMPTY_QUERY);
   const [labels, setLabels] = useState<Record<string, string>>({});
@@ -61,22 +102,25 @@ export default function Page() {
     try {
       let resp: DegreePlanLookupResponse = await fetchDegreePlan(partial);
 
-      // Auto-skip uninformative steps: when the API only offers `default` as the
-      // next track, silently pick it so users don't see a one-option dropdown.
+      // Auto-skip any unambiguous step. This keeps the journey focused on
+      // actual choices, including the final plan when there is only one.
       let working = { ...partial };
+      const autoLabels: Record<string, string> = {};
       let safety = 0;
-      while (
-        resp.next_query_field === "track_slug" &&
-        resp.options.tracks.length === 1 &&
-        resp.options.tracks[0].slug === "default" &&
-        safety++ < 3
-      ) {
-        working = { ...working, track_slug: "default" };
+      while (safety++ < 5) {
+        const field = resp.next_query_field;
+        if (!field || field === "done") break;
+        const option = getOnlyOption(field, resp.options);
+        if (!option) break;
+        working = { ...working, [field]: option.value };
+        autoLabels[field] = option.label;
         resp = await fetchDegreePlan(working);
       }
-      // Reflect the auto-selection in app state so the UI stays consistent.
-      if (working.track_slug && !partial.track_slug) {
+      // Reflect auto-selections and their labels so the picker and topbar are
+      // complete even though the user never had to interact with those steps.
+      if (Object.keys(autoLabels).length > 0) {
         setSelected(working);
+        setLabels((prev) => ({ ...prev, ...autoLabels }));
       }
 
       // Merge: keep cached lists for prior steps so re-opening a chip still
