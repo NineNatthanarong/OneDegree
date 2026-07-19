@@ -18,6 +18,8 @@ import {
   matchTargets,
   dragEligible,
   timedSections,
+  pickDefaultProgram,
+  studyYearFromTerm,
   variantKey,
   variantLabel,
   MAJOR_PREFIXES,
@@ -45,9 +47,7 @@ interface PlanSel {
   acadyr: string;
   faculty: string;   // school-of-* slug
   dept: string;      // cleaned dept name (id within acadyr+faculty)
-  variant: string;
-  studyYear: string;
-  sem: string;
+  variant: string;   // track|plan|cohort — default ปกติ · รุ่น 1/1
 }
 
 export default function TimetablePage() {
@@ -148,51 +148,72 @@ export default function TimetablePage() {
       if (p.acadyr === acadyr && p.faculty === faculty) seen.add(p.dept);
     return [...seen];
   };
+  const programsOf = (acadyr: string, faculty: string, dept: string) => {
+    if (!plans) return [] as PlanProgram[];
+    return plans.programs.filter(
+      (p) => p.acadyr === acadyr && p.faculty === faculty && p.dept === dept
+    );
+  };
   const variantsOf = (acadyr: string, faculty: string, dept: string) => {
-    if (!plans) return [] as { key: string; label: string; program: PlanProgram }[];
     const seen = new Set<string>();
     const out: { key: string; label: string; program: PlanProgram }[] = [];
-    for (const p of plans.programs) {
-      if (p.acadyr !== acadyr || p.faculty !== faculty || p.dept !== dept) continue;
+    for (const p of programsOf(acadyr, faculty, dept)) {
       const k = variantKey(p);
       if (seen.has(k)) continue;
       seen.add(k);
       out.push({ key: k, label: variantLabel(p), program: p });
     }
-    return out;
+    // ปกติ · รุ่น 1/1 first, then other ปกติ, then the rest
+    return out.sort((a, b) => {
+      const score = (p: PlanProgram) =>
+        (p.plan === "ปกติ" ? 0 : 2) + (/1\s*\/\s*1/.test(p.cohort) ? 0 : 1);
+      return score(a.program) - score(b.program) || a.label.localeCompare(b.label, "th");
+    });
   };
-  const programOf = (s: PlanSel | null): PlanProgram | null => {
-    if (!plans || !s) return null;
-    return plans.programs.find(
-      (p) => p.acadyr === s.acadyr && p.faculty === s.faculty && p.dept === s.dept && variantKey(p) === s.variant
-    ) || null;
-  };
+  const program = useMemo(() => {
+    if (!sel || !plans) return null;
+    return (
+      programsOf(sel.acadyr, sel.faculty, sel.dept).find((p) => variantKey(p) === sel.variant) ||
+      pickDefaultProgram(programsOf(sel.acadyr, sel.faculty, sel.dept))
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plans, sel?.acadyr, sel?.faculty, sel?.dept, sel?.variant]);
+
+  // Study year / semester derived from locked timetable term + entry year.
+  const studyYear = useMemo(() => {
+    if (!term || !sel) return "";
+    return String(studyYearFromTerm(sel.acadyr, term.year));
+  }, [term, sel]);
+  const studyYearInPlan = !!(program && studyYear && program.years[studyYear]);
+  const sem = useMemo(() => {
+    if (!term || !program || !studyYear) return "";
+    const opts = Object.keys(program.years[studyYear] || {});
+    return opts.includes(term.semester) ? term.semester : opts[0] ?? "";
+  }, [term, program, studyYear]);
 
   useEffect(() => {
     if (!plans || !term || sel) return;
-    const acadyr = acadyrs.includes(term.year) ? term.year : acadyrs[0];
+    // Prefer an entry year that maps to a plausible undergrad year (1–4).
+    const preferred =
+      acadyrs.find((y) => {
+        const yr = studyYearFromTerm(y, term.year);
+        return yr >= 1 && yr <= 4;
+      }) ?? acadyrs[0];
+    const acadyr = preferred ?? "";
     const facs = facultiesOf(acadyr);
     const faculty = facs[0]?.key ?? "";
     const depts = deptsOf(acadyr, faculty);
     const dept = depts[0] ?? "";
-    const vs = variantsOf(acadyr, faculty, dept);
-    const program = vs[0]?.program;
-    const studyYear = program ? Object.keys(program.years).sort((a, b) => +a - +b)[0] : "1";
-    const semOpts = program ? Object.keys(program.years[studyYear] || {}) : ["1"];
-    const semv = semOpts.includes(term.semester) ? term.semester : semOpts[0];
-    setSel({ acadyr, faculty, dept, variant: vs[0]?.key ?? "", studyYear, sem: semv });
+    const def = pickDefaultProgram(programsOf(acadyr, faculty, dept));
+    setSel({ acadyr, faculty, dept, variant: def ? variantKey(def) : "" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [plans, term]);
-
-  const program = programOf(sel);
-  const studyYears = program ? Object.keys(program.years).sort((a, b) => +a - +b) : [];
-  const sems = program && sel ? Object.keys(program.years[sel.studyYear] || {}).sort() : [];
 
   function patchSel(patch: Partial<PlanSel>) {
     setSel((prev) => {
       if (!prev) return prev;
       const next = { ...prev, ...patch };
-      // cascade: acadyr → faculty → dept → variant → studyYear → sem
+      // cascade: acadyr → faculty → dept → variant (default ปกติ 1/1)
       if (patch.acadyr) {
         const facs = facultiesOf(next.acadyr);
         next.faculty = facs.some((f) => f.key === next.faculty) ? next.faculty : facs[0]?.key ?? "";
@@ -203,21 +224,10 @@ export default function TimetablePage() {
       }
       if (patch.acadyr || patch.faculty || patch.dept) {
         const vs = variantsOf(next.acadyr, next.faculty, next.dept);
-        next.variant = vs.some((v) => v.key === next.variant) ? next.variant : vs[0]?.key ?? "";
-      }
-      if (patch.acadyr || patch.faculty || patch.dept || patch.variant) {
-        const prog = plans?.programs.find(
-          (p) => p.acadyr === next.acadyr && p.faculty === next.faculty && p.dept === next.dept && variantKey(p) === next.variant
-        );
-        const ys = prog ? Object.keys(prog.years).sort((a, b) => +a - +b) : [];
-        next.studyYear = ys.includes(next.studyYear) ? next.studyYear : ys[0] ?? "1";
-        const ss = prog ? Object.keys(prog.years[next.studyYear] || {}) : [];
-        next.sem = ss.includes(next.sem) ? next.sem : ss[0] ?? "1";
-      }
-      if (patch.studyYear) {
-        const prog = programOf(next);
-        const ss = prog ? Object.keys(prog.years[next.studyYear] || {}) : [];
-        next.sem = ss.includes(next.sem) ? next.sem : ss[0] ?? "1";
+        if (!vs.some((v) => v.key === next.variant)) {
+          const def = pickDefaultProgram(vs.map((v) => v.program));
+          next.variant = def ? variantKey(def) : vs[0]?.key ?? "";
+        }
       }
       return next;
     });
@@ -312,8 +322,8 @@ export default function TimetablePage() {
   }
 
   function autoFill() {
-    if (!program || !sel) return;
-    const codes = program.years[sel.studyYear]?.[sel.sem] || [];
+    if (!program || !sel || !studyYearInPlan || !sem) return;
+    const codes = program.years[studyYear]?.[sem] || [];
     const res = matchTargets(codes, courses);
     setChosen(new Set(res.chosenIds));
     const parts = [`เติม ${res.chosenIds.length} วิชา`];
@@ -363,7 +373,7 @@ export default function TimetablePage() {
               <>
                 <div className="tt-plan-grid">
                   <label>
-                    <span>หลักสูตรปี</span>
+                    <span>ปีการศึกษา</span>
                     <select value={sel.acadyr} onChange={(e) => patchSel({ acadyr: e.target.value })}>
                       {acadyrs.map((y) => (<option key={y} value={y}>{y}</option>))}
                     </select>
@@ -386,7 +396,7 @@ export default function TimetablePage() {
                   </label>
                   {variantsOf(sel.acadyr, sel.faculty, sel.dept).length > 1 && (
                     <label className="wide">
-                      <span>รูปแบบ</span>
+                      <span>แผน / รุ่น</span>
                       <select value={sel.variant} onChange={(e) => patchSel({ variant: e.target.value })}>
                         {variantsOf(sel.acadyr, sel.faculty, sel.dept).map((v) => (
                           <option key={v.key} value={v.key}>{v.label}</option>
@@ -394,20 +404,21 @@ export default function TimetablePage() {
                       </select>
                     </label>
                   )}
-                  <label>
-                    <span>ชั้นปี</span>
-                    <select value={sel.studyYear} onChange={(e) => patchSel({ studyYear: e.target.value })}>
-                      {studyYears.map((y) => (<option key={y} value={y}>ปี {y}</option>))}
-                    </select>
-                  </label>
-                  <label>
-                    <span>ภาคเรียน</span>
-                    <select value={sel.sem} onChange={(e) => patchSel({ sem: e.target.value })}>
-                      {sems.map((s) => (<option key={s} value={s}>{semLabel(s)}</option>))}
-                    </select>
-                  </label>
                 </div>
-                <button className="tt-autofill" onClick={autoFill} disabled={!program}>⤓ เติมตารางอัตโนมัติ</button>
+                {program && (
+                  <div className={"tt-plan-hint" + (studyYearInPlan ? "" : " warn")}>
+                    {studyYearInPlan
+                      ? `ชั้นปี ${studyYear} · ${semLabel(sem)}`
+                      : `ปีการศึกษา ${sel.acadyr} → ชั้นปี ${studyYear} (ไม่มีในแผนนี้)`}
+                  </div>
+                )}
+                <button
+                  className="tt-autofill"
+                  onClick={autoFill}
+                  disabled={!program || !studyYearInPlan || !sem}
+                >
+                  ⤓ เติมตารางอัตโนมัติ
+                </button>
                 {autoMsg && <div className="tt-plan-msg">{autoMsg}</div>}
               </>
             ) : (

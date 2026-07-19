@@ -1555,6 +1555,13 @@ button { font-family: inherit; }
   width: 100%; min-width: 0;
 }
 .tt-plan-grid select:hover { border-color: var(--bu); }
+.tt-plan-hint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+.tt-plan-hint.warn { color: var(--red); }
 .tt-autofill {
   margin-top: 10px; width: 100%;
   font-family: var(--font-thai); font-weight: 700; font-size: 13px;

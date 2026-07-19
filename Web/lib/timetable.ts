@@ -242,6 +242,24 @@ export function variantLabel(p: PlanProgram): string {
   return `${t}${p.plan} · ${p.cohort}`;
 }
 
+/** Prefer ปกติ · รุ่น 1/1; fall back to any ปกติ, then first variant. */
+export function pickDefaultProgram(candidates: PlanProgram[]): PlanProgram | null {
+  if (!candidates.length) return null;
+  return (
+    candidates.find((p) => p.plan === "ปกติ" && /1\s*\/\s*1/.test(p.cohort)) ||
+    candidates.find((p) => p.plan === "ปกติ") ||
+    candidates[0]
+  );
+}
+
+/** Study year from entry acad year vs current timetable year (2566 + term 2569 → 4). */
+export function studyYearFromTerm(acadyr: string, termYear: string): number {
+  const a = Number(acadyr);
+  const t = Number(termYear);
+  if (!Number.isFinite(a) || !Number.isFinite(t)) return 1;
+  return Math.max(1, t - a + 1);
+}
+
 export interface MatchResult {
   chosenIds: string[];
   missing: string[]; // code not offered this term
